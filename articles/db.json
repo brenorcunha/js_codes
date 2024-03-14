@@ -1,0 +1,9 @@
+{
+  "operations": [
+    {
+      "id": "1",
+      "name": "Hello world",
+      "value": "Lorem ipsum sit dolor amet consectetur adipisicing elit. Quibusdam minus inventore voluptatem, eum repellat sed officiis aliquam"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "articles_app",
+  "version": "1.0.0",
+  "description": "An API for basic personal financing.",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "json-server": "json-server --watch db.json"
+  },
+  "author": "Breno da Cunha",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^1.0.0-alpha.23"
+  },
+  "keywords": []
+}
