@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+	<h1>Trabalhando com Eventos no Javascript</h1>
+	<hr>
+
+	<h2>Registre-se!</h2>
+	  <section>
+		<label for="username">Nome de Usuário:</label>
+		<input type="text" name="username" id="username">
+		<br>
+		<label for="password">Senha:</label>
+		<input type="password" name="password" id="password">
+		<br>
+		<label for="passwordConfirmation">Confirme sua senha:</label>
+		<input type="password" name="passwordConfirmation" id="passwordConfirmation">
+		<br>
+		<button id="register-button">Registrar</button>
+		<button id="remove-button" onclick="removeEvent()">Remover Event Listener</button>
+	  </section>
+	  <script>
+		function register(e){
+			console.log(e)
+			const sectionElement = e.currentTarget.parentNode /* Para nao ter que repetir toda hora essa info*/
+			const username = sectionElement.children.username.value
+			const password = sectionElement.children.password.value
+			const passwordConfirmation = sectionElement.children.passwordConfirmation.value
+			
+			if(password === passwordConfirmation){
+				alert("Usuário " + username + " registrado!")
+			}else{
+				alert("As senhas não conferem")
+				}
+		}
+		const button = document.getElementById("register-button")
+		//Para 'rastrear' elemento. 
+		
+		button.addEventListener("click", register)	
+
+		button.addEventListener("mouseover", function (e){
+			console.log(e)
+		})	
+		function removeEvent(){
+			button.removeEventListener("click", register)
+			button.removeEventListener("mouseover", register)
+			alert("Event Removed")
+		}
+	  </script>
+</body>
+</html>
+<!--
+<h1>Escalação do time: </h1>
+	<hr>
+	<h3>Insira os dados do jogador: </h3>
+	<p>
+		<label for="posicao">Posição: </label>
+		<input type="text" name="posicao" id="posicao"></input>
+	
+		<label for="nome">Nome: </label>
+		<input type="text" name="nome" id="nome"></input>
+	
+		<label for="num_camisa">Núm. da camisa: </label>
+		<input type="text" name="num_camisa" id="num_camisa"></input>
+		<button id="btn" onclick="escalar()">Escalar</button>
+	</p>
+	<h3>Remover jogador: </h3>
+	<p>
+		<label for="numARemover">Número: </label>
+		<input type="text" name="numARemover" id="numARemover">
+		<button id="btnRemover" onclick="remover()">Remover jogador</button>
+	</p>
+	<h3>Escalação do time: </h3>
+	<ul id="listadoTime"></ul>
+    <script>
+        function escalar(){
+            const posicao = document.getElementById('posicao').value
+            const nomeJogador = document.getElementById('nome').value
+            const num_camisa = document.getElementById('num_camisa').value
+            //console.log(posicao + nomeJogador + num_camisa)
+            const conf  = confirm("Deseja mesmo salvar estas infos? não houve erros? "+ nomeJogador+ " camisa " + num_camisa)
+
+            if(conf){
+                const listadoTime = document.getElementById('listadoTime')
+                const jogadorItem = document.createElement('li')
+                jogadorItem.id = 'Jogador: ' + num_camisa
+                jogadorItem.innerText = posicao + ": " + nomeJogador + "(" + num_camisa + ")"
+                listadoTime.appendChild(jogadorItem)
+
+                document.getElementById('posicao').value = ''
+                document.getElementById('nome').value = ''
+                document.getElementById('num_camisa').value = ''
+            }
+        }
+        function remover(){
+            const num = document.getElementById('numARemover').value
+            let jogadorARemover = document.getElementById('Jogador ' + numARemover.value)
+			//console.log("JARemover: " + jogadorARemover)
+            const confi = confirm("Deseja mesmo remover o jogador? " + numARemover.value)
+            if(confi){
+                jogadorARemover.remove()
+                //document.getElementById('listadoTime').removeChild(jogadorARemover)
+                document.getElementById('numARemover').value = ''
+            }
+        }
+    </script>
+-->

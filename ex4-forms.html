@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forms</title>
+	<style>
+		.is-light{ background-color: #ffffff; color: #000000; }
+		.is-dark{ background-color: #000000; color: #ffffff; }
+	</style>
+</head>
+<body class="is-light">
+	<button id="lightBtn">Tema Claro</button>
+	<button id="darkBtn">Tema Escuro</button>
+	<button id="switchBtn">Alternar Tema Claro/Escuro</button>
+	<br>
+	<h1>Trabalhando com formulários</h1>
+	<hr>
+	<form id="form">
+		<label for="fullname">Nome:</label>
+		<input type="text" id="fullname" name="fullname">
+		<button id="rmv" type="button">(Des)habilitar label </button>
+		<br>
+		<label>Tecnologias:</label><br>
+		<button id="addTechBtn" type="button">Add tecnologia</button>
+		<br>
+		<ul id="stackInputs"></ul>
+		<br>
+		<button type="submit"> Cadastrar</button>
+	</form>
+	<script>
+		function useLightTheme() {
+		  document.body.style.color = '#000000'
+		  document.body.style.backgroundColor = '#ffffff'
+		}
+
+		function useDarkTheme() {
+		  document.body.style.color = '#ffffff'
+		  document.body.style.backgroundColor = '#000000'
+		}
+
+		// Manipulando estilos através das classes utilizadas pelo CSS
+		function switchTheme() {
+		  document.body.classList.toggle('is-light')
+		  document.body.classList.toggle('is-dark')
+		}
+		//--------------------------------------------------------------------------
+		// Adicionando os eventos
+		document.getElementById('lightBtn').addEventListener('click', useLightTheme)
+		document.getElementById('darkBtn').addEventListener('click', useDarkTheme)
+		document.getElementById('switchBtn').addEventListener('click', switchTheme)
+		//Variáveis globais úteis para a resolução:
+		const addTechBtn = document.getElementById('addTechBtn')
+		const form = document.getElementById('form')
+		const developers = []
+		let inputRows = 0
+		//Funções auxiliares(JS) para agilizar o processo de criação dos elementos, 
+		//já que faremos isso várias vezes:
+		function createLabel(text, htmlFor){
+			const label = document.createElement('label')
+			label.htmlFor = htmlFor
+			label.innerText = text
+			return label
+		}
+		function createInput(id, value, name, type = 'text', placeholder='Tecnologia'){
+			const input = document.createElement('input')
+			input.id = id
+			input.value = value
+			input.name = name
+			input.type = type
+			input.placeholder = placeholder
+			return input
+		}
+		document.getElementById('rmv').addEventListener('click', function(ev){
+				fullname.setAttribute('disabled', !fullname.disabled)
+			})
+
+		//Agora vamos criar o evento do botão que adiciona os novos campos no formulário:
+		addTechBtn.addEventListener('click', function(ev){
+			const stackInputs = document.getElementById('stackInputs')
+			
+			const newRow = document.createElement('li')
+			const rowIndex = inputRows
+			inputRows++
+			newRow.id = 'inputRow-' + rowIndex
+			newRow.className = 'inputRow'
+			
+			const techNameLabel = createLabel('Nome:', 'techName-' + rowIndex)
+			const techNameInput = createInput('techName-' +rowIndex, null, 'techName')
+			const expLabel = createLabel('Experiência:') 
+			
+			const id1 = 'expRadio-' + rowIndex + '.1'
+			const expRadio1 = createInput(id1, '0-2 anos', 'techExp-' + rowIndex, 'radio')
+			const expLabel1 = createLabel('0-2 anos', id1)
+			const id2 = 'expRadio-' + rowIndex + '.2'
+			const expRadio2 = createInput(id2, '3-4 anos', 'techExp-' + rowIndex, 'radio')
+			const expLabel2 = createLabel('3-4 anos', id2)
+			const id3 = 'expRadio-' + rowIndex + '.3'
+			const expRadio3 = createInput(id3, '5+ anos', 'techExp-' + rowIndex, 'radio')
+			const expLabel3 = createLabel('5+ anos ', id3)
+			
+			const removeRowBtn = document.createElement('button')
+			removeRowBtn.type = 'button'
+			removeRowBtn.innerText = 'Remover'
+			removeRowBtn.addEventListener('click', function () {
+				stackInputs.removeChild(newRow)
+				})
+			newRow.append(
+				techNameLabel, techNameInput, expLabel, expRadio1, expLabel1, expRadio2, expLabel2, expRadio3, expLabel3, removeRowBtn
+			)
+			stackInputs.appendChild(newRow)
+		})
+		form.addEventListener('submit', function (ev) {
+		  ev.preventDefault() /*PARA EVITAR QUE O FORM RECARREGUE E PERCA INFORMACOES PREENCHIDAS*/
+
+		  const fullnameInput = document.getElementById('fullname')
+		  const inputRows = document.querySelectorAll('.inputRow')
+
+		  let technologies = []
+		  inputRows.forEach(function (row) {
+			// #rowId input[name="techName"]
+			const techName = document.querySelector('#' + row.id + ' input[name="techName"]').value
+			const techExp = document.querySelector('#' + row.id + ' input[type="radio"]:checked').value
+			technologies.push({ name: techName, exp: techExp })
+		  })
+		  const newDev = { fullname: fullnameInput.value, technologies: technologies }
+		  developers.push(newDev)
+		  alert('Dev cadastrado com sucesso!')
+
+		  fullnameInput.value = ''
+		  inputRows.forEach(function (row) {
+			row.remove()
+		  })
+
+		  console.log(developers)
+		})
+	</script>
+</body>
+</html>

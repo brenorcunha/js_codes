@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OOP project: Add DOM components dinamically</title>
+  </head>
+  <body>
+    <form id="form"></form>
+    <script type="module">
+      let inputRows = 0;
+      class Component {
+        #reference = null;
+        constructor(type, value, id, options) {
+          this.type = type;
+          this.value = value;
+          this.id = id;
+          this.options = options;
+          this.build();
+        }
+        getReference() {
+          return this.#reference;
+        }
+        build() {
+          this.#reference = document.createElement(this.type);
+          Object.assign(this.#reference, this.options);
+          return this;
+        }
+        render() {
+          const form = document.getElementById("form");
+          //const form_ = document.createElement('form')
+
+          const newRow = document.createElement("ul");
+          const rowIndex = inputRows;
+          inputRows++;
+          newRow.id = "inputRow-" + rowIndex;
+          newRow.className = "inputRow";
+
+          if (this.type == "label") {
+            const label_ = document.createElement("label");
+            label_.textContent = this.value;
+            form.appendChild(label_);
+          } else if (this.type == "input") {
+            const input_ = document.createElement("input");
+            input_.placeholder = this.value;
+            form.appendChild(input_);
+			form.appendChild(newRow);
+          } else {
+            const button_ = document.createElement("button");
+            button_.textContent = this.value;
+            form.appendChild(button_);
+			form.appendChild(newRow);
+          }
+        }
+      }
+      class Label extends Component {
+        constructor(value, id, options) {
+          super("label", value, id, { textContent: this.value });
+        }
+      }
+
+      class Input extends Component {
+        constructor(value, id, options) {
+          super("input", value, id, options);
+        }
+      }
+      class Button extends Component {
+        constructor(type, value, id) {
+          super("button", value, id);
+        }
+      }
+
+      const label_ = new Component("label", "Nome: ", "lbl1");
+      label_.render();
+
+      const input_ = new Component("input", "Digite aqui o nome ", "ipt1");
+      input_.render();
+      const label2 = new Component("label", "Sobrenome: ", "lbl2");
+      label2.render();
+      const i2 = new Component("input", "Digite aqui o sobrenome ", "ipt2");
+      i2.render();
+      const bt1 = new Component("button", "Register", "btn1");
+      bt1.render();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<title>Online HTML Editor</title>
+<head>
+</head>
+<body>
+    <h1>Online form app</h1>
+    <form id="form">
+        <label for="nome">Name: </label>
+        <input type="text" name="name" id="name"/>
+        <span id="name-error"></span>
+        <br>
+        <label for="email">E-mail: </label>
+        <input type="text" name="email" id="email"/>
+        <span id="email-error"></span>
+        <br>
+        <label for="password">Password: </label>
+        <input type="password" name="password" id="password"/>
+        <span id="password-error"></span>
+        <br>
+        <button type="submit" name="btn1" id="btn1">Submit</button>
+    </form>
+    <script type="text/javascript">
+        function validateData(email, pwd){
+            if(!email.match(/\w{2,}@[a-zA-Z]{2,}\.[a-zA-Z]{2,}/)){
+				throw new Error("The e-mail format is invalid!")
+				spanEmail.textContent="ERROR!"
+			} else if(!pwd.match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*\W).{8,}$/)){
+				throw new Error("Password does not meet all the criteria!")
+				spanPwd.textContent ='ERROR!'}
+        }
+        const form = document.querySelector('#form')
+        form.addEventListener('submit',(ev)=>{
+            ev.preventDefault()
+			try{
+				let email = document.querySelector('#email').value
+				let pwd = document.querySelector('#password').value
+				let spanEmail = document.querySelector('#email-error')
+				let spanPwd = document.querySelector('#password-error')
+				spanEmail.textContent=" "
+				spanPwd.textContent=" "
+				validateData(email, pwd)
+				} catch(error){
+					throw new Error(error)
+				}
+        })
+    </script>
+</body>
+</html>
