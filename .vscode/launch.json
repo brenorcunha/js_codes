@@ -5,11 +5,40 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Launch Program",
+            "program": "${workspaceFolder}\\personalFinanceAPI\\script.js",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        
+        {
+            "args": [
+                "-u",
+                "tdd",
+                "--timeout",
+                "999999",
+                "--colors",
+                "${workspaceFolder}\\personalFinanceAPI\\script.js"
+            ],
+            "internalConsoleOptions": "openOnSessionStart",
+            "name": "Mocha Tests",
+            "program": "${workspaceFolder}/personalFinanceAPI/node_modules/mocha/bin/_mocha",
+            "request": "launch",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "node"
+        },
+        {
             "type": "msedge",
             "request": "launch",
-            "name": "Launch Edge against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
-        }
+            "name": "Launch Edge",
+            "url": "http://localhost:3000/personalFinanceAPI",
+            "webRoot": "${workspaceFolder}/personalFinanceAPI"
+        },
+
     ]
 }

@@ -1,9 +1,44 @@
 {
-    "operations": [
-        {
-            "id": 1,
-            "name": "PIX Transference",
-            "value": "500.00"
-        }
-    ]
+  "personalFinanceAPI": [
+    {
+      "name": "PIX Transference",
+      "amount": -100.9,
+      "id": "1"
+    },
+    {
+      "id": "1384",
+      "name": "DOC Transference",
+      "amount": -100
+    },
+    {
+      "id": "be78",
+      "name": "Online Shopping",
+      "amount": 500
+    },
+    {
+      "name": "Received payments",
+      "amount": 100,
+      "id": "fd85"
+    },
+    {
+      "id": "2166",
+      "name": "Debt Repayment",
+      "amount": -100
+    },
+    {
+      "name": "Debt Repayment",
+      "amount": -100,
+      "id": "b16a"
+    },
+    {
+      "name": "PIX receivement",
+      "amount": 100,
+      "id": "bbcf"
+    },
+    {
+      "id": "5481",
+      "name": "Earned",
+      "amount": 200
+    }
+  ]
 }

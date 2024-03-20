@@ -8,7 +8,7 @@ const {fileURLToPath} = require("url")
 const app = express()
 const router = require("./routes")	
 app.use(morgan("common"))
-app.use(cors({ origin: process.env.CORS_ORIGIN}))
+app.use(cors())
 
 try {
 	mongoose.connect('mongodb://127.0.0.1:27017/hp').catch(error => handleError(error));
@@ -34,7 +34,7 @@ app.get('/', async (req, res) => {
 /* const newUser = new User({
 	username: "brenorc",
 	password: "1234"
-}) 
+})
 
 newUser.save()
 	.then(() =>{return console.error("User succesfully created")
