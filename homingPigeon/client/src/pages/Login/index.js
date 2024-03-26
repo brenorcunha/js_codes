@@ -15,29 +15,24 @@ export default function Login(){
 	const handleLogin = async event =>{
 		event.preventDefault()
 		if (!username || !password) return
-
-		try {
-			const response = await axios.post(
-				`${process.env.REACT_APP_SERVER_URL}/login`, {
-				username,
-				password
-			})
-			console.log(jwtDecode(response.data.token))
-			localStorage.setItem("SESSION_TOKEN", response.data.token)
-			return navigate("/home")
-		} catch (error) {
-			//console.error(error)
-			//Error treatment:
-			if (error.response.status === 404) {
-				setError("Username not found.")
-			} else if (error.response.status === 400) {
-				setError("Wrong password!")
+		else {
+			try {
+				const response = await axios.post(
+					`${process.env.REACT_APP_SERVER_URL}/login`, {
+					username,
+					password
+				})
+				console.log(jwtDecode(response.data.token))
+				localStorage.setItem("SESSION_TOKEN", response.data.token)
+				return navigate("/home")
+			} catch (error) {
+				if(error.response.status===404) setError("User not found.")
+				else if(error.response.status===4000) setError("Incorrect password.")
+				setPassword("")
 			}
-			console.error(error)
-			setPassword("")
 		}
 	}
-	const handleRegister = async event=>{
+	function handleRegister(event) {
 		event.preventDefault()
 		return navigate("/register")
 	}

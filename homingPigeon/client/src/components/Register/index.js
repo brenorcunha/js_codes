@@ -1,38 +1,36 @@
 import React, { useState } from 'react'
-import { Container, Content, Input, Button, ErrorWarning } from "./styles"
-import axios from 'axios'
+import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
+import { Container, Content, Input, Button, ErrorWarning } from "./styles"
 
-export default function Register(){
-	const[username, setUsername] = useState("")
-	const[password, setPassword] = useState("")
-	const [error, setError] = useState("")
-	const navigate = useNavigate()
-	
-	async function handleRegister(event) {
-		event.preventDefault()
-		if (!username || !password) return
-
-		try {
-			// bd.push(username, password)
-			const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/register`, {
-				username,
-				password
-			})
-			localStorage.setItem("SESSION_TOKEN", response.data.token)
-
-			console.log({ username, password })
-			return navigate("/home")
-		} catch (error) {
-			setError("Something's wrong!")
-			console.error(error)
-			setPassword("")
-		}
-
+export default function Register() {
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [error, setError] = useState("");
+	const navigate = useNavigate();
+  
+	function handleRegister(event) {
+	  event.preventDefault();
+	  if (!username || !password) return;
+	  else {
+		axios
+		.post(`${process.env.REACT_APP_SERVER_URL}/register`, {
+		  username,
+		  password,
+		})
+		.then((response) => {
+		  localStorage.setItem("SESSION_TOKEN", response.data.token);
+		  console.log({ username, password });
+		  navigate("/tweets");
+		})
+		.catch((error) => {
+		  setError("Something's wrong!");
+		  setPassword("");
+		});
+	  }
 	}
-	
 	return(
 		<Layout>
 			<Container>

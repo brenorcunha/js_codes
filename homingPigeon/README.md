@@ -1,19 +1,21 @@
 # 🚀 Welcome to my homingPigeon project
-
+![homingPigeonLOGO](https://i.imgur.com/6zvsamu.jpeg)
 A microbogging platorm, just like Twitter.
 
 ## Stack:
 
 **Front-end:** JavaScript, React, Axios, Styled Components.
 
-**Back-end:** Node, Express, JavaSCript.
+**Back-end:** NodeJS, Express, JavaScript.
 
 ## Functionalities: 
-- Login
-- Register
-- Viewing/Editing/Removing messages
+- Routes
+- User authentication
+- MongoDB integration
+- LOGs Register
 
 ## Roadmap: 
-
-- Conclude basic functionalities (Editing 'tweets').
-- Add themes support.
+- Login (Partially conluded)
+- Register (Partially concluded)
+- Add themes support
+- Viewing/Editing/Liking/ Removing messages
