@@ -1,19 +1,14 @@
-const { json } = require("express");
 const { connect, connection } = require("mongoose");
 const morgan = require("morgan");
 const cors = require("cors");
-const router = require("./routes.js");
-const path = require("path")
-
+const middlewares = require("./middlewares");
 const express = require("express");
+const router = require("./routes");
 const app = express();
-
+app.use(middlewares.notFound);
+app.use(middlewares.errorHandling);
 app.use(morgan("common"));
-app.use(
-	cors({
-    origin: "http://localhost:3000"
-  })
-);
+app.use(cors);
 
 try {
   connect("mongodb://127.0.0.1:27017/hp").catch((error) => new Error(error));
@@ -27,13 +22,11 @@ try {
   res.send(error)
 }
 
-//Body parsing middleware: Tell express we want to use the requests as JSON data.
-app.use(json());
-//app.use(express.static(path.join(__dirname,'src')))
+app.use(router);
+app.use(express.json());
+app.use(cors(corsOptions));
 
-app.get("/", async (req, res, next) => {
-  res.redirect("/home")
-});
+//app.use(express.static(path.join(__dirname,'src')))
 
 /* const newUser = new User({
 	username: "brenorc",
@@ -51,22 +44,4 @@ app.listen(PORT, () => {
   console.log(`Server listening on ${PORT} port.`);
 });
 
-//NOT FOUND MIDDLEWARE: Se a URL não for encontrada, exibe a msg, corrige status da req e passa adiante.
-const notFound = (req, res, next) => {
-  const error = new Error(`Not found ${req.originalUrl}`);
-  res.status(404);
-  next(error);
-};
-//ERROR HANDLING MIDDLEWARE: Se a req chegar com status 200 (success) significa que não foi tratada, então coloca status de erro e retorna tudo.
-const errorHandling = (error, req, res, next) => {
-  const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
-  res.statusCode = statusCode;
-  res.json({
-    message: error.message,
-    trace:
-      process.env.NODE_ENV === "production"
-        ? "Not allowed infos, sorry..."
-        : error.trace,
-  });
-};
-module.exports = { app, errorHandling, notFound };
+module.exports = app;

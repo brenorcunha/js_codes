@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 
 import Layout from '../../components/Layout'
 import { Container, Content, Input, Button, ErrorWarning } from "./styles"
+import isAuthenticated from "../../Routes/index.js"
 
 export default function Register() {
 	const [username, setUsername] = useState("");
@@ -23,9 +24,11 @@ export default function Register() {
 		.then((response) => {
 		  localStorage.setItem("SESSION_TOKEN", response.data.token);
 		  console.log({ username, password });
+		  isAuthenticated = true;
 		  navigate("/tweets");
 		})
 		.catch((error) => {
+			isAuthenticated = false;
 		  setError("Something's wrong!");
 		  setPassword("");
 		});

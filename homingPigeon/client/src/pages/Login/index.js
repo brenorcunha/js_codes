@@ -4,7 +4,7 @@ import { Container, Content, Input, Button, ErrorWarning } from './styles'
 import axios from "axios"
 import { useNavigate } from 'react-router-dom'
 import { jwtDecode } from "jwt-decode"
-
+import isAuthenticated from "../../Routes/index.js"
 export default function Login(){
 	const[username, setUsername] = useState("")
 	const[password, setPassword] = useState("")
@@ -24,8 +24,10 @@ export default function Login(){
 				})
 				console.log(jwtDecode(response.data.token))
 				localStorage.setItem("SESSION_TOKEN", response.data.token)
+				isAuthenticated=true
 				return navigate("/home")
 			} catch (error) {
+				//isAuthenticated = false
 				if(error.response.status===404) setError("User not found.")
 				else if(error.response.status===4000) setError("Incorrect password.")
 				setPassword("")

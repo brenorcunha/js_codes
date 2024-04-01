@@ -1,15 +1,15 @@
 import React from "react";
 import { Navigate, Route} from "react-router-dom";
 
-const AuthRoute = ({component: Component, isAuthenticated, ...rest}) =>(
-    <Route 
-    {...rest}
-    render={(props) =>
-    isAuthenticated ? <component {...props}
-/>  : <Navigate to="/login" replace/>
-    }
-    />
-);
+const AuthRoute = ({component: Component, isAuthenticated, ...rest}) =>{
+    return (
+        <Route
+            {...rest}
+            render={(props) => isAuthenticated ? <Home /> : <Navigate to="/login" replace />} />
+            //<component {...props}/> no lugar de <Home se erro.
+    );
+};
+
 export default AuthRoute;
 
 /* export default function AuthRoute(props) {
