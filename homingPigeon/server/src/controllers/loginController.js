@@ -7,10 +7,15 @@ db.user = require("../model/User");
 const User = db.user;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-require("dotenv").config();
+require("dotenv").config({path: './src/.env'});
+const path = require("path");
 
 exports.home = async (req, res) => {
-  if (!validateToken || validateToken == null) res.redirect("/login");
+  if (!validateToken || validateToken == null) {
+    res.redirect("/login");
+  } else {
+    res.sendFile(path.join(__dirname, '../index.html'));
+  };
 };
 
 exports.register = async (req, res) => {
@@ -30,32 +35,55 @@ exports.register = async (req, res) => {
       "brenorc",
       { algorithm: "HS256", allowInsecureKeySizes: true, expiresIn: 86400 } //24hours
     );
-    return res
+    req.session.token = token;
+    res.status(200).send({
+      id: user._id,
+      username: user.username
+    })
+    /* return res
     .status(200)
     .header("auth-token", token)
-    .send({ id: user.id, username: user.username, accessToken: token });
+    .send({ id: user.id, username: user.username, accessToken: token }); */
   }
 };
 
 exports.login = async (req, res) => {
-  const user = await User.findOne({ username: req.body.username });
-  const validPassword = bcrypt.compareSync(req.body.password, user.password);
-  if (!user || user == null) {
-    res.status(404).send({ message: "Sorry... Username not found." });
-    return;
-  } else if (!validPassword || validPassword == null) {
-    res.status(401).send({ accessToken: null, message: "Invalid password." });
-    return;
-  } else {
+  try {
+    const { username, password } = req.body;
+
+    const user = await User.findOne({ username }).exec();
+    if (!user) {
+      return res.status(404).send({ message: "User not found." });
+    }
+
+    const validPassword = bcrypt.compareSync(password, user.password);
+    if (!validPassword) {
+      return res.status(401).send({ message: "Senha inválida." });
+    }
+
     const token = jwt.sign(
       { id: user.id },
-      "brenorc",
-      { algorithm: "HS256", allowInsecureKeySizes: true, expiresIn: 86400 } //24hours
+      process.env.JWT_SECRET,
+      { algorithm: "HS256", expiresIn: "24h" }
     );
-    return res.header("auth-token", token).json(token).status(200);
-    //.send({ id: user._id, username: user.username, accessToken: token });
+    if (!token || token === null){
+      console.error("Error trying to logIn: INVALID OR NULL TOKEN");
+      return ;
+    }
+    else {
+    req.session.token = token;
+    return res.status(200).send({
+      id: user._id,
+      username: user.username,
+      token: token
+    });
+    }
+  } catch (error) {
+    console.error("Error trying to logIn: ", error);
+    return res.status(500).send({ message: error.message});
   }
 };
+
 
 exports.logout = async (req, res, next) => {
   try {
