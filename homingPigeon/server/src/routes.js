@@ -18,13 +18,12 @@ router.get("/home", validateToken,  loginController.home);
 router.post("/register", loginController.register);
 router.post("/login", loginController.login);
 router.post("/logout", validateToken, loginController.logout);
-//router.post("/tweets", tweetsController.createaTweet);
-//router.delete("/tweets/:id", tweetsController.deleteaTweet);
-//router.put("/tweets/:id", tweetsController.updateaTweet);
-//router.get("/tweets", tweetsController.getallTweets);
-//router.get("/tweets/:id", tweetsController.getaTweet);
+router.post("/tweets", tweetsController.createaTweet);
+router.delete("/tweets/:id", tweetsController.deleteaTweet);
+router.put("/tweets/:id", tweetsController.updateaTweet);
+router.get("/tweets", tweetsController.getallTweets);
 router.get("/users", validateToken, userController.getallUsers);
-router.get("/users/:id", validateToken, userController.getaUser);
+router.get("/users/${id}", validateToken, userController.getaUser);
 router.delete("/users/:id", validateToken, userController.deleteaUser);
 
 module.exports = router;

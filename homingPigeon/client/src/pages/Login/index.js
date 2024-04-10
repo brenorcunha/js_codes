@@ -24,15 +24,15 @@ export default function Login() {
             password,
           }
         );
-        console.log(jwtDecode(response.data.token));
+        //console.log(jwtDecode(response.data.token));
         localStorage.setItem("SESSION_TOKEN", response.data.token);
         return navigate("/home");
       } catch (error) {
         //isAuthenticated = false
         if (error.response.status === 404) setError("User not found.");
-        else if (error.response.status === 4000)
+        else if (error.response.status === 400)
           setError("Incorrect password.");
-        setPassword("");
+          setPassword("");
       }
     }
   };

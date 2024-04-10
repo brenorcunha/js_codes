@@ -23,25 +23,18 @@ export default function Register() {
         .then((response) => {
           if(response.data.username){
             localStorage.setItem("User", JSON.stringify(response.data));
-            console.log({ username, password });
-            //navigate("/tweets"); SUGGESTION, CAN REMOVE IF IT DOESN'T MATTER.
+            navigate("/home");
           }
           return response.data;
         })
-        .catch((error) => {
+        .catch(() => {
           setError("Something is wrong!");
           setPassword("");
         });
-        const logout = () =>{
-          localStorage.removeItem(user);
-          return axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`)
-          .then((response) => {
-            return response.data;
-          });
-        };
-        const getCurrentUser = () =>{
+        
+        /* const getCurrentUser = () =>{
           return JSON.parse(localStorage.getItem("user"));
-        };
+        }; */
     }
   }
   return (
