@@ -5,8 +5,8 @@ import axios from "axios";
 //let token = req.session.token;
 
 export default function Tweet(props) {
-  const [username, setUsername] = useState("");
-  const [error, setError] = useState("");
+  const [username, setUsername] = useState([])
+  const [error, setError] = useState([]);
   useEffect(() => {
     const fetchUsername = async () => {
       try {

@@ -47,28 +47,39 @@ exports.createaTweet = async (req, res) => {
       .json({ error: "[INTERNAL ERROR - 500] Unable to create the message." });
   }
 };
-
-exports.updateaTweet = async (req, res) => {
+exports.getaTweet = async(req, res) => {
   try {
-    const tweetId = req.body.tweetId;
-    const tweets = await Tweet.findByIdAndUpdate({ _id: tweetId }, {content: req.body.content}, {new: true}).exec();
-    //'new: true' retrieves the updated doc.
-    if (!tweets || tweets == null) {
+    const tweetId = req.params.id;
+    const tweet = await Tweet.findOne({_id: tweetId}).exec();
+    if (!tweet) {
       return res.status(400).json({ error: "Message not found or empty." });
+    } else{
+      return res.status(200).json({tweet});
     }
   } catch (error) {
+    return res.status(500).json({message: error.message});
+  }
+}
+exports.updateaTweet = async (req, res) => {
+  try {
+    const tweetId = req.params.id;
+    const tweet = await Tweet.findByIdAndUpdate(tweetId, {content: req.body.content}, {new: true}).exec();
+    //'new: true' retrieves the updated doc.
+    if (!tweet) {
+      return res.status(400).json({ error: "Message not found or empty." });
+    } else{
+      return res.status(200).json({message: "Message successfully updated!"})
+    }
+  } catch (error) {
+    console.log(error)
     return res.status(500).json({message: error.message});
   }
 };
 
 exports.deleteaTweet = async(req,res) => {
   try {
-    const tweetId = req.body.tweetId;
-    const tweets = await Tweet.findByIdAndDelete({ _id: tweetId }).exec();
-    //'new: true' retrieves the updated doc.
-    if (!tweets || tweets == null) {
-      return res.status(400).json({ error: "Message not found or empty." });
-    }
+    const tweetId = req.params.id;
+    await Tweet.findByIdAndDelete({ _id: tweetId }).exec();
     return res.status(200).send({message: "Successfully deleted."})
   } catch (error) {
     return res.status(500).json({message: error.message});

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
-const validateToken = require("../auth.js");
+validateToken = require("../auth.js");
 const db = {};
 db.mongoose = mongoose;
 db.user = require("../model/User");
@@ -9,13 +9,16 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 require("dotenv").config({path: './src/.env'});
 const path = require("path");
-
+exports.blank = async (req, res) =>{
+  if(req.token){
+    res.redirect("/home")
+    //res.sendFile(path.join(__dirname, '../index.html'));
+  } else{
+    res.redirect("/login")
+  }
+};
 exports.home = async (req, res) => {
-  if (!validateToken || validateToken == null) {
-    res.redirect("/login");
-  } else {
-    res.sendFile(path.join(__dirname, '../index.html'));
-  };
+  res.redirect("/home")
 };
 
 exports.register = async (req, res) => {
@@ -32,7 +35,7 @@ exports.register = async (req, res) => {
 
     const token = jwt.sign(
       { id: user.id },
-      "brenorc",
+      process.env.JWT_SECRET,
       { algorithm: "HS256", allowInsecureKeySizes: true, expiresIn: 86400 } //24hours
     );
     req.session.token = token;
@@ -49,9 +52,10 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const { username, password } = req.body;
-
-    const user = await User.findOne({ username }).exec();
+    //const { username, password } = req.session.token;
+    var username = req.body.username
+    const password = req.body.password
+    user = await User.findOne({username}).exec();
     if (!user) {
       return res.status(404).send({ message: "User not found." });
     }

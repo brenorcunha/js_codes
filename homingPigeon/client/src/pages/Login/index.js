@@ -3,7 +3,6 @@ import Layout from "../../components/Layout";
 import { Container, Content, Input, Button, ErrorWarning } from "./styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -24,7 +23,7 @@ export default function Login() {
             password,
           }
         );
-        //console.log(jwtDecode(response.data.token));
+        //consoconsolele.log(jwtDecode(response.data.token));
         localStorage.setItem("SESSION_TOKEN", response.data.token);
         return navigate("/home");
       } catch (error) {
@@ -64,11 +63,11 @@ export default function Login() {
           </div>
 
           <div>
+          <Button onClick={handleLogin} type="submit">
+              Enter
+            </Button>
             <Button onClick={handleRegister} type="submit">
               Register
-            </Button>
-            <Button onClick={handleLogin} type="submit">
-              Enter
             </Button>
           </div>
         </Content>

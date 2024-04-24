@@ -23,31 +23,22 @@ exports.getallUsers = async (req, res) => {
   }
 };
 
-exports.getaUser = async(req, res) => {
+exports.getaUser = async (req, res) => {
+  const userId = req.params.id;
   try {
-    const userId = req.body.id;
-    const user = await User.findById({
-      _id: userId
-    }).exec();
-    if(!user || user == null){
-      return res.status(404).send({ message: "Sorry... Username not found." });
-    } else{
-      const token = jwt.sign(
-        { id: user._id },
-        process.env.JWT_SECRET,
-        { algorithm: "HS256", allowInsecureKeySizes: true, expiresIn: 86400 } //24hours
-      );
-      //req.session.token = token;
-      res.status(200).send({
-        id: user._id,
-        username: user.username,
-        token: token
-      })
+    const user = await User.findById(userId).exec();
+
+    if (!user) {
+      return res.status(400).send({ message: "Sorry... Username not found." });
+    } else {
+      return res.status(200).send(user);
     }
   } catch (error) {
-    return res.status(500).send({message: error.message});
+    console.error("Error fetching user:", error);
+    return res.status(500).send({ message: "Internal server error." });
   }
 };
+
 
 exports.deleteaUser = async (req, res) => {
     const userId = req.body.id;
@@ -57,12 +48,13 @@ exports.deleteaUser = async (req, res) => {
   
     if (!user || user == null) {
       return res.status(400).send({ message: "Sorry... Username not found." });
+    } else{
+      try{
+        await User.deleteOne({_id: userId});
+        res.status(200).send({ message: "User deleted successfully." });
+      } catch (error) {
+        res.status(500).send({ message: error.message });
+        return;
+      }
     }
-try{
-    await User.deleteOne({_id: userId});
-    res.status(200).send({ message: "User deleted successfully." });
-  } catch (error) {
-    res.status(500).send({ message: error.message });
-    return;
-  }
 };

@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node src/index.js",
-    "dev": "Start-Service -name MongoDB && nodemon src/index.js"
+    "dev": "nodemon src/index.js"
   },
   "author": "Breno",
   "license": "ISC",

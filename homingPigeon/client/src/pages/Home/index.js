@@ -14,7 +14,7 @@ import {
 export default function Home() {
   const [tweets, setTweets] = useState([]);
   const [error, setError] = useState([]);
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchTweets = async () => {
       try {
         const token = localStorage.getItem("SESSION_TOKEN");
@@ -45,7 +45,7 @@ export default function Home() {
       }
     };
     fetchTweets();
-  }, []);
+  }, []); */
 
   const handleLike = (ownerID, tweetID) => {
     //console.log(ownerID, tweetID);

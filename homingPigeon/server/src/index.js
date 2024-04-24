@@ -63,7 +63,7 @@ app.use(cookieSession({
   httpOnly: true
 }));
 app.get("/", function (req, res) {
-  return res.redirect("/home");
+  return res.send("OK.")
 });
 
 /* const newUser = new User({

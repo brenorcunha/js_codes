@@ -3,14 +3,14 @@ import {Container, Button} from "./styles"
 import axios from "axios"
 
 export default function TweetForm() {
-    const[text, setText] = useState("")
+    const[text, setText] = useState([])
 
     async function handleTweet(event) {
         event.preventDefault()
 
         try {
             const token = localStorage.getItem("SESSION_TOKEN")
-
+            
             const response = await axios.post(
                 `${process.env.REACT_APP_SERVER_URL}/tweets`,
                 {
@@ -33,7 +33,7 @@ export default function TweetForm() {
                 <textarea 
                 required
                 value = {text}
-                onChange={e => setText(e.target.value)}
+                onChange={event => setText(event.target.value)}
                 placeholder="What do you want to share with us?"
                 rows={4}
                 />
