@@ -25,9 +25,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
-    "test": "react-scripts test",
+    "start": "react-scripts start",
     "build": "webpack --mode=production --node-env=production",
+    "test": "react-scripts test",
     "build:dev": "webpack --mode=development",
     "build:prod": "webpack --mode=production --node-env=production",
     "watch": "webpack --watch",
@@ -52,13 +52,19 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.23.9",
+    "@babel/preset-env": "^7.23.9",
+    "@webpack-cli/generators": "^3.0.7",
+    "babel-loader": "^8.0.5",
     "html-loader": "^5.0.0",
     "node-env-run": "^4.0.2",
     "nodemon": "^3.1.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^3.2.5",
     "styled-components": "^6.1.8",
-    "webpack": "^4.47.0",
-    "webpack-cli": "^5.1.4"
+    "webpack": "^5.90.1",
+    "webpack-cli": "^4.19.6",
+    "webpack-dev-server": "^4.15.1"
   }
 }
+

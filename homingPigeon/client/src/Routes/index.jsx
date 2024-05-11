@@ -2,7 +2,7 @@ import React from "react";
 import {
   BrowserRouter as Router,
   Routes as RoutesDOM,
-  Route
+  Route, Navigate
 } from "react-router-dom";
 /* BrowserRouter: componente responsável pelo controle dos estados da URL da aplicação.
 Switch/Routes: sistema de match da rota e URL.
@@ -13,16 +13,29 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../components/Register";
 import TweetList from "../components/TweetList";
+/* const userIsAuthenticated(){
+  
+}
+ */
+const ProtectedRoute = ({ component: Component, isAuthenticated, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      isAuthenticated ? <Component {...props} /> : <Redirect to="/login" />
+    }
+  />
+);
+
 
 export default function Routes() {
   return (
     <Router>
       <RoutesDOM>
-        <Route path="/" exact element={<Login />} />;
+      <ProtectedRoute path="/" exact component={Home} isAuthenticated={userIsAuthenticated}/>
+        <ProtectedRoute path="/home" component={Home} isAuthenticated={userIsAuthenticated}/>
         <Route path="/register" element={<Register />} />;
-        <Route path="/home" element={<Home />} />;
         <Route path="/login" element={<Login />} />;
-        <Route path="/tweets" element={<TweetList />} />;
+        <ProtectedRoute path="/tweets" component={TweetList} isAuthenticated={userIsAuthenticated}/>
       </RoutesDOM>
     </Router>
   );

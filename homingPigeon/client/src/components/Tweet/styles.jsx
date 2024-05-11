@@ -14,17 +14,17 @@ export const Container = styled.div`
 `
 
 export const LikeButton = styled.button`
-    background: white
-    border: 1px solid #F13636
-    padding: 0.4rem 1rem
-    border-radius: 20px
-    color: #F13636
-    font-weight: 600
-    cursor: pointer
-    margin-left: 0.5rem
+    background: white;
+    border: 1px solid #F13636;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    color: #F13636;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 0.5rem;
 
     &:hover{
-        background: #F13636
-        color: white
+        background: #F13636;
+        color: white;
     }
 `

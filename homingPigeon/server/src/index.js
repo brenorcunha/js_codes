@@ -9,15 +9,14 @@ const path = require("path");
 
 app.use(express.json()); //Parse requests of content type
 app.use("/", express.static(path.join(__dirname, "src/index.html")));
-app.use(cors(corsOptions));
 app.use("/uploads", express.static(path.join(__dirname, "..", "uploads")));
 
-app.use(morgan("common"));
+app.use(morgan("common"));  
 app.use(router);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandling);
-require("dotenv").config({path: './src/.env'});
-var corsOptions = {
+require("dotenv").config({path: './.env'});
+let corsOptions = {
   origin: "http://localhost:3000",
   origin: (origin, callback) => {
     if ((origin && whiteList.includes(origin)) || !origin) {
@@ -29,18 +28,19 @@ var corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
+app.use(cors(corsOptions));corsOptions
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 const db = {};
 db.mongoose = mongoose;
 db.user = require("./model/User.js");
 
-mongoose.connection.on("connected", () => console.log("KinnectD 2 da DB."));
-mongoose.connection.on("open", () => console.log("OpenD"));
-mongoose.connection.on("disconnected", () => console.log("Disconnected"));
-mongoose.connection.on("reconnected", () => console.log("Reconnected"));
+mongoose.connection.on("connected", () => console.log("Connected to the DB."));
+mongoose.connection.on("open", () => console.log("Opened DB connection."));
+mongoose.connection.on("disconnected", () => console.log("Disconnected."));
+mongoose.connection.on("reconnected", () => console.log("Reconnected."));
 mongoose.connection.on("disconnecting", () => console.log("Disconnecting..."));
-mongoose.connection.on("close", () => console.log("Closed"));
+mongoose.connection.on("close", () => console.log("Closed."));
 
 mongoose
   .connect(process.env.DB_URL)
@@ -48,7 +48,7 @@ mongoose
     const PORT = process.env.PORT || 3333;
 
     app.listen(PORT, () => {
-      console.log(`Server is running on ${PORT}.`);
+      console.log(`Server is running on port: ${PORT}.`);
     });
   })
   .catch((error) => console.log(error, "Error trying to connect to DB."));

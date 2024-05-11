@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
-import Layout from "../../components/Layout";
+import Layout from "../Layout";
 import { Container, Content, Input, Button, ErrorWarning } from "./styles";
+require("dotenv").config({path: './.env'});
 
 export default function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState();
   const navigate = useNavigate();
 
   function handleRegister(event) {
@@ -41,7 +41,7 @@ export default function Register() {
     <Layout>
       <Container>
         <Content>
-          {error && <ErrorWarning>(error)</ErrorWarning>}
+          {error && <ErrorWarning>{error}</ErrorWarning>}
           <div>
             <label>Username: </label>
             <Input

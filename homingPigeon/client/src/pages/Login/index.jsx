@@ -3,17 +3,17 @@ import Layout from "../../components/Layout";
 import { Container, Content, Input, Button, ErrorWarning } from "./styles";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+require("dotenv").config({path: './.env'});
 
 export default function Login() {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState([]);
+  const [password, setPassword] = useState([]);
   const navigate = useNavigate();
-  const [error, setError] = useState("");
+  const [error, setError] = useState()
 
-  //async function handleLogin(event) {
   const handleLogin = async (event) => {
     event.preventDefault();
-    if (!username || !password) return;
+    if (!username || !password) return setError("Username or password not received.");
     else {
       try {
         const response = await axios.post(
@@ -23,11 +23,10 @@ export default function Login() {
             password,
           }
         );
-        //consoconsolele.log(jwtDecode(response.data.token));
+        //console.log(jwtDecode(response.data.token));
         localStorage.setItem("SESSION_TOKEN", response.data.token);
         return navigate("/home");
       } catch (error) {
-        //isAuthenticated = false
         if (error.response.status === 404) setError("User not found.");
         else if (error.response.status === 400)
           setError("Incorrect password.");
@@ -44,7 +43,7 @@ export default function Login() {
       <Container>
         <Content>
           <p>Welcome 2 homingPigeon!</p>
-          {error && <ErrorWarning>(error)</ErrorWarning>}
+          {error && <ErrorWarning>{error}</ErrorWarning>}
           <div>
             <label>Username: </label>
             <Input

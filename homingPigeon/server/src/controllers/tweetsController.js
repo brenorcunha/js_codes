@@ -22,14 +22,15 @@ exports.getallTweets = async (req, res) => {
 };
 
 exports.createaTweet = async (req, res) => {
-  const _content = req.body.content; //Requires the content of the message from the REQ.
+  const _content = req.body.content;
+  //Requires the content of the message from the REQ.
   try {
     const tweet = await Tweet.create({
       owner: req.username,
       content: _content,
       likes: [],
     });
-    if (!tweet || tweet == null) {
+    if (!tweet) {
       return res
         .status(400)
         .json({ error: "Unable to create the message [EMPTY CONTENT]." });

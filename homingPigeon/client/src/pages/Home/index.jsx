@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import TweetForm from "../../components/TweetForm";
@@ -10,11 +11,13 @@ import {
   Button,
   ErrorWarning,
 } from "../../components/Register/styles";
+require("dotenv").config({path: './.env'});
 
 export default function Home() {
   const [tweets, setTweets] = useState([]);
   const [error, setError] = useState([]);
-  /* useEffect(() => {
+  const navigate = useNavigate();
+  useEffect(() => {
     const fetchTweets = async () => {
       try {
         const token = localStorage.getItem("SESSION_TOKEN");
@@ -45,12 +48,12 @@ export default function Home() {
       }
     };
     fetchTweets();
-  }, []); */
+  }, []);
 
   const handleLike = (ownerID, tweetID) => {
     //console.log(ownerID, tweetID);
     const newTweets = tweets.map((tweet) => {
-      if (tweet.id === tweetID && newTweets !== null) {
+      if (tweet.id === tweetID) {
         const tweetLiked = tweet.likes.found((owner) => owner === owner.ID);
 
         if (tweetLiked) {
@@ -66,13 +69,15 @@ export default function Home() {
     });
     setTweets(newTweets.reverse());
   };
-  const logout = () => {
-    localStorage.removeItem("User"); //IF DON'T WORK, remove quotes.
-    return axios
-      .post(`${process.env.REACT_APP_SERVER_URL}/logout`)
-      .then((response) => {
-        return response.data;
-      });
+  const logout = async () => {
+    try {
+      localStorage.removeItem("User");
+      await axios.post(`${process.env.REACT_APP_SERVER_URL}/logout`);
+      
+      return navigate("/login");
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    }
   };
 
   return (

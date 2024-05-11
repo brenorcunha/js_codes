@@ -1,22 +1,20 @@
 //Function that receives the REQ, RES & next function, that calls the next middleware. The own route, in this case.
-const express = require("express");
 const jwt = require("jsonwebtoken");
-require("dotenv").config({path: './src/.env'});
+require("dotenv").config({path: './.env'});
 
-validateToken = async(req, res, next) => {
-  var token = req.session.token;
+validateToken = (req, res, next) => {
+  let token = req.session.token;
   
-  try {
-    if(!token){
-      return res.status(403).send({message: "No token found."});
-    } else {
-      const decoded = await jwt.verify(token, process.env.JWT_SECRET);
-      req.user = decoded;
-      next(token);
-    }
-  } catch (error) {
-    return res.status(401).send({ message: error.message });
+  if(!token || token==null){
+    return res.status(403).send({message: "No token found."});
+  } else {
+    jwt.verify(token, process.env.JWT_SECRET, (error, decoded) =>{
+      if(error){
+        return res.status(401).send({message: "Unauthorized access!"})
+      }
+      req.userId = decoded.id;
+      next();
+    });
   }
-};
-
+}
 module.exports = validateToken;

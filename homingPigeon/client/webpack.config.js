@@ -9,6 +9,7 @@ const config = {
     entry: './src/index.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
+        hashFunction:'sha512'
     },
     devServer: {
         open: true,
@@ -42,7 +43,6 @@ const config = {
             fallback: {
               fs: false,
               'stream': require.resolve('stream-browserify'),
-              'crypto': require.resolve('crypto-browserify'),
               'axios': require.resolve('axios'),
               'buffer': require.resolve('buffer/'),
               'util': require.resolve('util/'),
@@ -50,9 +50,11 @@ const config = {
               'http': require.resolve('stream-http/'),
               'url': require.resolve('url/'),
               'https': require.resolve('https-browserify/'),
-              'os': require.resolve('os-browserify/'),
+              "path": require.resolve("path-browserify"),
+              "os": require.resolve("os-browserify"),
+              "crypto": require.resolve("crypto-browserify")
             },
-            extensions: ['.html']
+            extensions: ['.html','.jsx']
           }
     },
 };

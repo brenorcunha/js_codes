@@ -7,22 +7,24 @@ db.user = require("../model/User");
 const User = db.user;
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-require("dotenv").config({path: './src/.env'});
+require("dotenv").config({path: './.env'});
 const path = require("path");
-exports.blank = async (req, res) =>{
-  if(req.token){
+
+exports.blank = async (req, res) => {
+  if(req.session.token){
     res.redirect("/home")
     //res.sendFile(path.join(__dirname, '../index.html'));
   } else{
     res.redirect("/login")
   }
 };
-exports.home = async (req, res) => {
-  res.redirect("/home")
-};
-
+exports.home = async (req, res) =>{
+  return res
+    .status(200)
+    .send({ message: "Access OK"}); 
+}
 exports.register = async (req, res) => {
-  var user = await User.findOne({ username: req.body.username });
+  let user = await User.findOne({ username: req.body.username });
   if (user) {
     res.status(400).send({ message: "User already exists!" });
     return ;
@@ -43,19 +45,15 @@ exports.register = async (req, res) => {
       id: user._id,
       username: user.username
     })
-    /* return res
-    .status(200)
-    .header("auth-token", token)
-    .send({ id: user.id, username: user.username, accessToken: token }); */
   }
 };
 
 exports.login = async (req, res) => {
   try {
     //const { username, password } = req.session.token;
-    var username = req.body.username
+    let username = req.body.username
     const password = req.body.password
-    user = await User.findOne({username}).exec();
+    let user = await User.findOne({username: username}).exec();
     if (!user) {
       return res.status(404).send({ message: "User not found." });
     }

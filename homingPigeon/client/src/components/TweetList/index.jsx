@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
-//import { Container } from "../TweetForm/styles";
+import { Container } from "../TweetForm/styles";
 import Tweet from "../Tweet";
-//import { ErrorWarning } from "../Register/styles";
 import axios from "axios";
+//import { ErrorWarning } from "../Register/styles";
+require("dotenv").config({path: './.env'});
 
-export default function TweetList() {
+export default function TweetList(props) {
   const [tweets, setTweets] = useState([]);
   
   useEffect(() => {
     // Busque os tweets quando o componente for montado
     const fetchTweets = async () => {
       try {
-        const response = await axios.get("http://localhost:3333/tweets"); // Rota para buscar tweets
+        const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/tweets`); // Rota para buscar tweets
         setTweets(response.data); // Atualize o estado com os tweets
       } catch (error) {
         console.error("Erro ao buscar tweets:", error);
@@ -22,13 +23,12 @@ export default function TweetList() {
   }, []);
 
   return (
-    <div>
-      <h2>Tweets</h2>
+    <Container>
       <ul>
-        {tweets.map((tweet) => (
-          <Tweet key={tweet._id} tweet={tweet} />
+        {props.tweets.map((tweet) => (
+          <Tweet key={tweet._id} owner={tweet.owner} content={tweet.content} likes={tweet.likes}/>
         ))}
       </ul>
-    </div>
+    </Container>
   );
 }

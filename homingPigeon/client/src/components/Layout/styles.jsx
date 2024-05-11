@@ -16,4 +16,4 @@ export const Content = styled.div`
     align-items: center
     flex-direction: column
     padding-top: 1rem
-    ` 
+    `

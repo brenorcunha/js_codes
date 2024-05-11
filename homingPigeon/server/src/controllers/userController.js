@@ -6,7 +6,7 @@ db.mongoose = mongoose;
 db.user = require("../model/User");
 const User = db.user;
 const jwt = require("jsonwebtoken");
-require("dotenv").config({path: './src/.env'});
+require("dotenv").config({path: './.env'});
 
 exports.getallUsers = async (req, res) => {
   try {
