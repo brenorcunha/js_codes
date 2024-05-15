@@ -1,43 +1,29 @@
 {
   "name": "client",
+  "description": "Front code of the homingPigeon app, a microblog like Twitter.",
   "version": "1.0.0",
-  "description": "Client side of a microbogging solution, just like Twitter.",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.6.7",
-    "buffer": "^6.0.3",
-    "crypto-browserify": "^3.12.0",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "axios": "^1.6.8",
     "dotenv": "^16.4.5",
-    "http-proxy-middleware": "^3.0.0",
-    "node-polyfill-webpack-plugin": "^3.0.0",
-    "os-browserify": "^0.3.0",
-    "path-browserify": "^1.0.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.0",
-    "react-scripts": "^3.0.1",
-    "stream-browserify": "^3.0.0",
-    "util": "^0.12.5",
-    "uuid": "^9.0.1",
-    "web-vitals": "^2.1.4"
+    "jsonwebtoken": "^9.0.2",
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "^4.0.3",
+    "styled-components": "^5.0.1"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
     "test": "react-scripts test",
-    "build": "webpack --mode=production --node-env=production",
-    "build:dev": "webpack --mode=development",
-    "build:prod": "webpack --mode=production --node-env=production",
-    "watch": "webpack --watch",
-    "serve": "webpack serve"
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -52,13 +38,6 @@
     ]
   },
   "devDependencies": {
-    "html-loader": "^5.0.0",
-    "node-env-run": "^4.0.2",
-    "nodemon": "^3.1.0",
-    "npm-run-all": "^4.1.5",
-    "prettier": "^3.2.5",
-    "styled-components": "^6.1.8",
-    "webpack": "^4.47.0",
-    "webpack-cli": "^5.1.4"
+    "@types/react-router-dom": "^5.3.3"
   }
 }

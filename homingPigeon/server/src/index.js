@@ -16,7 +16,7 @@ app.use(router);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandling);
 require("dotenv").config({path: './.env'});
-let corsOptions = {
+/* let corsOptions = {
   origin: "http://localhost:3000",
   origin: (origin, callback) => {
     if ((origin && whiteList.includes(origin)) || !origin) {
@@ -27,8 +27,8 @@ let corsOptions = {
   },
   methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
   allowedHeaders: ["Content-Type", "Authorization"],
-};
-app.use(cors(corsOptions));corsOptions
+}; */
+app.use(cors());
 const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 const db = {};

@@ -35,7 +35,7 @@ export const Content = styled.form`
 
   a {
     text-decoration: none;
-    color: #F13636;
+    color: #E4080A;
     cursor: pointer;
   }
 `;
@@ -48,21 +48,21 @@ export const Input = styled.input`
   &:focus {
     border: none;
     outline: none;
-    border-bottom: 1px solid #F13636;
+    border-bottom: 1px solid #E4080A;
   }
 `;
 
 export const Button = styled.button`
   background: white;
-  border: 1px solid #F13636;
+  border: 1px solid #E4080A;
   padding: 0.4rem 1.3rem;
   border-radius: 20px;
-  color: #F13636;
+  color: #E4080A;
   font-weight: 600;
   cursor: pointer;
 
   &:hover {
-    background: #F13636;
+    background: #E4080A;
     color: white;
   }
 `;

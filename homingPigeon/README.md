@@ -7,26 +7,26 @@ A microbogging platorm, just like Twitter.
 
 **Front-end:** JavaScript, React, Axios, Styled Components.
 
-**Back-end:** NodeJS, Express V4, JavaScript.
+**Back-end:** NodeJS, Express V4, JavaScript, MongoDB.
 
 ## Functionalities
 
 - Routes management
 - User authentication
 - MongoDB integration
-- LOGs Register
 - Login
 - Logout
 - Register
 - Delete user
 - Modify user
-- Cookies sessions
+- Cookie sessions
 
 ## Roadmap
 
-- Add themes support
+- Add themes support.
 - Viewing/ Editing/ Removing/ Liking/ short messages.
+- Files upload.
 
-I'm really enjoying this project, because I can apply all my knowledge and learn more stuff, challenging me alot. This code is based in an old code, but I'm improving it, rebuilding, but for now, I don't pretend to make drastic changes, like using TS or add another libraries, to amke it easier to understand for everyone that has a minimun JS knowledge.
+I'm really enjoying this project, because I can apply all my knowledge and learn more stuff, challenging me alot. This code is based in an old code, but I'm improving it, rebuilding. In tme, I pretend to add a lot of resources.
 
-Estou gostando muito desse projeto, pois posso aplicar todo o meu conhecimento e aprender mais coisas, me desafiando muito. Esse código é baseado em um código antigo, mas estou melhorando, reconstruindo, mas por enquanto, não pretendo fazer mudanças drásticas, como usar TS ou adicionar outras bibliotecas, para facilitar o entendimento para todos que têm um conhecimento mínimo de JS.
+Estou gostando muito desse projeto, pois posso aplicar todo o meu conhecimento e aprender mais coisas, me desafiando muito. Esse código é baseado em um código antigo, mas estou melhorando, reconstruindo. pretendo ir adicionando mais recursos conforme o tempo. 
