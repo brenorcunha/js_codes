@@ -1,5 +1,5 @@
 import Card from './Components/Card'
-import swposter from './assets/sw-poster.jpg'
+import swposter from './assets/sw-poster'
 import esbposter from './assets/esb-poster.jpg'
 import rotjposter from './assets/rotj-poster.jpg'
 function App() {
