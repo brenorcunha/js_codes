@@ -1,4 +1,6 @@
+import { useRouteError, isRouteErrorResponse } from "react-router-dom";
 // Using the 'useRouteError' HOOK from 'React Router' and then,create a proper fallback:
+
 export default function ProductBoundary() {
     const error = useRouteError()
     if(isRouteErrorResponse(error)){
@@ -11,7 +13,7 @@ export default function ProductBoundary() {
 
             case 400:
                 return <h2>Sorry, something went wrong with the request...</h2>
-            default:
+            case 500:
                 return <h2>500 - Internal server error.</h2>
         }
     }
