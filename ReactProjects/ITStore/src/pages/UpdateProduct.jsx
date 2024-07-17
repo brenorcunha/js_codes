@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
+import products from "../database.json"
 
-export default function Product(){
+export default function UpdateProduct(){
     /* This is an example of how to get the products from the DB manually, but here we can't make a proper error-handling
     we create the folder 'loaders/products.js'.
      const {productId} = useSearchParams()

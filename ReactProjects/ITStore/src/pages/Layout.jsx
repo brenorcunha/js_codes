@@ -8,17 +8,16 @@ export default function Layout(){
                     <Link to="/">Home</Link>
                     <Link to="/products">Products</Link>
                     <Link to="/cart">Cart</Link>
-                    <Link to="/dashboard">Dashboard</Link>
                 </nav>
             </header>
             <main>
-                <p>This is MAIN layout. Below is the dynamic content of each child route.</p>
+                <p>Welcome 2 ITStore website.</p>
                 <hr />
                 <Outlet />
             </main>
             <footer>
                 <hr />
-                <p>Made with react-router-dom. 2024 </p>
+                <p>ITStore. Made with react-router-dom. </p>
             </footer>
         </>
     )

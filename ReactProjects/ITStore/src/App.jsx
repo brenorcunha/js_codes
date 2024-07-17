@@ -2,11 +2,9 @@ import { useState } from 'react'
 import { RouterProvider } from 'react-router-dom'
 import './index.css'
 import router from './router'
-import.meta.env.DEV
 
 function App() {
-  // const [count, setCount] = useState(0)
-    return (
+  return (
     <>
     <RouterProvider router={router}/>
     </>
@@ -15,4 +13,4 @@ function App() {
 
 export default App
 
-// npm install react-scripts@latest dotenv ('vite-plugin-node-polyfills' Only if necessary!).
+// npm install react-scripts@latest dotenv ('--save-dev vite-plugin-node-polyfills' Only if necessary!).
