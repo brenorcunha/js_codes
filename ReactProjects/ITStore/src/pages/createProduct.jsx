@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
-import products from "../database.json";
+import products from '../database.json';
 import { useState } from "react";
-import * as fs from 'node:fs';
+import axios from "axios";
 
 const typesA = [
   "Processor",
@@ -10,7 +10,11 @@ const typesA = [
   "Motherboard",
   "Cooler",
 ];
-
+const saveData = (newProduct)  =>{
+  axios.post('http://localhost:3000/save', newProduct)
+  .then(response =>{console.log('Data successfully sent!', response.data)})
+  .catch(error =>{console.error('CHANFLE! Error on trying to send data!')}) 
+}
 export default function createProduct() {
   const [name, setName] = useState("")
   const [desc, setDesc] = useState("")
@@ -18,10 +22,10 @@ export default function createProduct() {
   const [quantity, setQuantity] = useState(1)
   const [type, setType] = useState("")
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event, res) => {
     event.preventDefault();
     try {
-      const newProduct = {
+      let newProduct = {
         id: Math.floor(Math.random() * 10000000),
         name: name,
         description: desc,
@@ -30,8 +34,9 @@ export default function createProduct() {
         addDate: new Date(),
         type: type
       };
-      
-      products.push(newProduct)
+      saveData(newProduct, res)
+      //localStorage.setItem('newProduct', JSON.stringify(newProduct))
+      //products.push(newProduct)
     } catch (error) {
       console.log(error.message)
       alert("An error ocurred!")
@@ -50,6 +55,9 @@ export default function createProduct() {
   const handleQuantity = (event) =>{
     setQuantity((current) => ({...current, [event.target.name]: [event.target.value]}))
   }
+  const handleType = ((event) =>{
+    setType((current) => ({...current, [event.target.name]: [event.target.value]}))
+  })
 
   return (
     <section>
@@ -94,7 +102,7 @@ export default function createProduct() {
             Select a type...
           </option>
           {typesA.map((type) => (
-            <option key={type} value={type} defaultChecked={products.type === type}>
+            <option key={type} value={type} defaultChecked={products.type === type} onChange={handleType}>
               {type}
             </option>
           ))}

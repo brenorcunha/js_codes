@@ -4,7 +4,7 @@ export function loadProduct({params}) {
     // O parâmetro '+' é para garantir que dado será comparado como inteiro:    x
     const product = products.find(p => p.id === +params.productId)
     if(!product){
-        throw new Response("Oops... The product wasn't found", {status: 404})
+        throw new Response("Oops... The products weren't found", {status: 404})
     }
     return product
 }
