@@ -1,8 +1,10 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import products from "../database.json";
+import { StockContext } from "../contexts/StockContext";
+import DeleteButton from "../components/deleteButton";
+import { useContext } from "react"
 
 export default function Products() {
+  const { Products = []} = useContext(StockContext)
   return (
     <section>
       <Link to="/products">
@@ -21,7 +23,7 @@ export default function Products() {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
+          {Products.map((product) => (
             <tr key={product.id}>
               <td>{product.id}</td>
               <td>{product.name}</td>
@@ -43,6 +45,7 @@ export default function Products() {
                 >
                   Update
                 </Link>
+                <DeleteButton productId={product.id} productName={product.name}></DeleteButton>
               </td>
             </tr>
           ))}

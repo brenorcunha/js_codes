@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
-import products from "../database.json";
-
+import { StockContext } from "../contexts/StockContext";
+import { useContext } from "react";
 export default function Product() {
+  const { Products } = useContext(StockContext)
+
   const {id} = useParams()
-  const product = products.find((product) => ( product.id == parseInt(id)))
+  const product = Products.find((product) => ( product.id == parseInt(id)))
   return (
     <section>
       <Link to="/products">
@@ -32,6 +34,7 @@ export default function Product() {
                 <Link to={`${product.id}/update`} className="button is-small">
                   Update
                 </Link>
+                <DeleteButton itemId={product.id} itemName={product.name} />
               </td>
             </tr>
         </tbody>

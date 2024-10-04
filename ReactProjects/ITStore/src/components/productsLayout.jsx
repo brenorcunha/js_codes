@@ -1,6 +1,4 @@
 import { Link, Outlet, useLocation } from "react-router-dom";
-import products from "../database.json"
-
 export default function ProductsLayout() {
   const { pathname } = useLocation()
 

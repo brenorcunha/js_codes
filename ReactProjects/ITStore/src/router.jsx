@@ -7,7 +7,7 @@ import Layout from "./pages/Layout";
 import Product from "./pages/Product";
 import { loadProduct } from "./loaders/products";
 import ProductBoundary from "./error-boundaries/productBoundary";
-import CreateProduct from "./pages/createProduct";
+import RegisterProduct from "./pages/createProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import ProductsLayout from "./components/productsLayout";
 
@@ -23,7 +23,7 @@ const router= createBrowserRouter([
             element: <ProductsLayout />,
             children: [
                 {index: true, element: <Products />},
-                {path: "new", element: <CreateProduct />},
+                {path: "new", element: <RegisterProduct />},
                 {path: ":id", element: <Product />},
                 {path: ":id/update", element: <UpdateProduct />}
             ]

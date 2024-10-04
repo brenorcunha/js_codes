@@ -1,7 +1,5 @@
 import { Link } from "react-router-dom";
-import products from '../database.json';
 import { useState } from "react";
-import axios from "axios";
 
 const typesA = [
   "Processor",
@@ -10,55 +8,55 @@ const typesA = [
   "Motherboard",
   "Cooler",
 ];
-const saveData = (newProduct)  =>{
+/* const saveData = (newProduct)  =>{
   axios.post('http://localhost:3000/save', newProduct)
   .then(response =>{console.log('Data successfully sent!', response.data)})
   .catch(error =>{console.error('CHANFLE! Error on trying to send data!')}) 
-}
-export default function createProduct() {
-  const [name, setName] = useState("")
-  const [desc, setDesc] = useState("")
-  const [price, setPrice] = useState(0.00)
-  const [quantity, setQuantity] = useState(1)
-  const [type, setType] = useState("")
-
-  const handleSubmit = (event, res) => {
-    event.preventDefault();
-    try {
-      let newProduct = {
-        id: Math.floor(Math.random() * 10000000),
-        name: name,
-        description: desc,
-        price: price,
-        quantity: quantity,
-        addDate: new Date(),
-        type: type
+} */
+function handleSubmit(event) {
+  event.preventDefault();
+  try {
+    let newProduct = {
+      id: Math.floor(Math.random() * 10000000),
+      name: document.getElementById('name').value,
+      description: document.getElementById('description').value,
+      price: parseFloat(document.getElementById('price').value,10),
+      quantity: parseInt(document.getElementById('quantity').value,10),
+      addDate: new Date(),
+      type: document.getElementById('type').value
       };
-      saveData(newProduct, res)
-      //localStorage.setItem('newProduct', JSON.stringify(newProduct))
-      //products.push(newProduct)
-    } catch (error) {
-      console.log(error.message)
-      alert("An error ocurred!")
-    }
-  };
-  
-  const handleName = (event) =>{
-    setName((current) => ({...current, [event.target.name]: [event.target.value]}))
+      validate(newProduct);
+      let products = JSON.parse(localStorage.getItem('stock')) || []
+      products.push(newProduct)
+      localStorage.setItem('stock', JSON.stringify(products));
+      alert("Product saved successfully")
+      document.getElementById('name').value = ""
+      document.getElementById('description').value = ""
+      document.getElementById('price').value = ""
+      document.getElementById('quantity').value = ""
+} catch (error) {
+    console.log(error.message);
+    alert("An error ocurred!"+ error.message);
   }
-  const handleDescription = (event) =>{
-    setDesc((current) => ({...current, [event.target.name]: [event.target.value]}))
-  }
-  const handlePrice = (event) =>{
-    setPrice((current) => ({...current, [event.target.name]: [event.target.value]}))
-  }
-  const handleQuantity = (event) =>{
-    setQuantity((current) => ({...current, [event.target.name]: [event.target.value]}))
-  }
-  const handleType = ((event) =>{
-    setType((current) => ({...current, [event.target.name]: [event.target.value]}))
-  })
+}
 
+function validate(product) {
+  const validName = typeof product.name === "string"
+  const validDescription = typeof product.description === "string"
+  const validQuantity = typeof product.quantity === "number" && Number.isInteger(product.quantity)
+  const validPrice = typeof product.price === "number"
+  const validType = typesA.includes(product.type)
+  if (
+    !validName ||
+    !validDescription ||
+    !validQuantity ||
+    !validPrice ||
+    !validType
+  ) {
+    throw new Error("Invalid item!")
+  }
+}
+export default function registerProduct(){
   return (
     <section>
       <Link to="/products">
@@ -67,7 +65,7 @@ export default function createProduct() {
       <form onSubmit={handleSubmit}>
         <h2>Add new Product: </h2>
         <label htmlFor="name">Name: </label>
-        <input type="text" name="name" id="name" required onChange={handleName} />
+        <input type="text" name="name" id="name" required/>
         <br />
         <label htmlFor="description">Desc: </label>
         <textarea
@@ -75,7 +73,6 @@ export default function createProduct() {
           id="description"
           required
           rows={6}
-          onChange={handleDescription}
         ></textarea>
 
         <br />
@@ -87,14 +84,12 @@ export default function createProduct() {
           required
           min={0.0}
           step={0.01}
-          onChange={handlePrice}
-        />
+          />
         <br />
         <label htmlFor="quantity">Quantity: </label>
-        <input type="number" name="quantity" id="quantity" required min={0.0}
-        step={1}
-        onChange={handleQuantity}
-        />
+        <input type="number" name="quantity" id="quantity" required min={0}
+          step={1}
+          />
         <br />
         <label htmlFor="type">Type: </label>
         <select name="type" id="type" required>
@@ -102,14 +97,24 @@ export default function createProduct() {
             Select a type...
           </option>
           {typesA.map((type) => (
-            <option key={type} value={type} defaultChecked={products.type === type} onChange={handleType}>
+            <option key={type} value={type} defaultChecked={type}>
               {type}
             </option>
           ))}
         </select>
         <br />
-        <button type="submit" onSubmit={handleSubmit}> ADD </button>
+        <button type="submit"> ADD </button>
       </form>
     </section>
   );
+}
+
+export class createProduct {
+  constructor(name, description, price, quantity, type) {
+    this.name = name,
+    this.description = description,
+    this.price = price,
+    this.quantity = quantity,
+    this.type = type
+  }
 }

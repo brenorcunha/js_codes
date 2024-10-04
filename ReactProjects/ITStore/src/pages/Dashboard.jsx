@@ -1,42 +1,29 @@
-import { useEffect, useState } from "react";
-import { Outlet } from "react-router-dom";
-import products from "../database.json"
+import { Outlet, useParams } from "react-router-dom";
+import StockContext from "../contexts/StockContext";
+import { useContext } from "react"
 
 export default function Dashboard(){
-    const [items, setItems] = useState(0)
-    const [recentItems, setRecentItems] = useState([])
-    const [lowStockItems, setLowStockItems] = useState([])
+    let { items } = useContext(StockContext)||[]
     
-    useEffect(() => {
-        const stockData = products.reduce((sum, product) => sum+(product.quantity), 0)
-        setItems(stockData)
-        const tenDaysAgo = new Date(new Date().setDate(new Date().getDate() - 10))
-        const recent = products.filter(item => new Date(item.addDate)>=tenDaysAgo)
-        setRecentItems(recent)
-        setLowStockItems(products.filter(item => item.quantity < 10))
-        /* 
-        //Carry data from lOCAL_STORAGE
-        const stockData = JSON.parse(localStorage.getItem('stock')) || []
-        setItems(stockData)
+    if(!Array.isArray(items)){
+        alert("Data wasn't received successfully!")
+        items = []
+    }
+    // Filtrar itens adicionados nos últimos 10 dias[^1^][1][^2^][2]: 
+    const tenDaysAgo = new Date(new Date().setDate(new Date().getDate() - 10))
+    const recentItems = items.filter((item) => item.addDate>=tenDaysAgo)
 
-        // Filtrar itens adicionados nos últimos 10 dias[^1^][1][^2^][2]: 
-        const tenDaysAgo = new Date(new Date().setDate(new Date().getDate() - 10))
-        const recent = stockData.filter(item => new Date(item.addDate)>=tenDaysAgo)
-        setRecentItems(recent)
-
-        //Products with less than 10 items in stock:
-        stockData.filter(item => item.quantity < 10)
-        */
-    }, [])
+    //Products with less than 10 items in stock:
+    const lowStockItems = items.filter((item) => item.quantity < 10) || []
     return (
         <main>
             <header>
-            <Outlet />
+                <Outlet />
             </header>
             <h2>Dashboard</h2>
             <div className="main">
-                <p className="cell">Total quantity of different items: {new Set (products.map(product => product.type)).size}</p>
-                <p className="cell">Total quantity of all items: {items}</p>
+                <p className="cell">Total quantity of different items: {new Set (items.map(product => product.type)).size}</p>
+                <p className="cell">Total quantity of all items: { items.reduce((total, item) => total + item.quantity, 0)}</p>
                 <p className="cell">Added items last 10 days: {recentItems.length}</p>
                 <p className="cell">Quantity of low-stock items: {lowStockItems.length}</p>
             </div>
