@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
 import { StockContext } from "../contexts/StockContext";
 import DeleteButton from "../components/deleteButton";
-import { useContext } from "react"
-
+import { useContext } from "react";
+//NEXT: Conseguir exibir produto aqui pelo ID: 'products.map is not a function' ocorre.
 export default function Products() {
-  const { Products = []} = useContext(StockContext)
+  const products = useContext(StockContext);
   return (
     <section>
       <Link to="/products">
@@ -23,7 +23,7 @@ export default function Products() {
           </tr>
         </thead>
         <tbody>
-          {Products.map((product) => (
+          {products.map((product) => (
             <tr key={product.id}>
               <td>{product.id}</td>
               <td>{product.name}</td>
@@ -39,13 +39,13 @@ export default function Products() {
                   See
                 </Link>
                 <br />
-                <Link
-                  to={`${product.id}/update`}
-                  className="button is-small"
-                >
+                <Link to={`${product.id}/update`} className="button is-small">
                   Update
                 </Link>
-                <DeleteButton productId={product.id} productName={product.name}></DeleteButton>
+                <DeleteButton
+                  productId={product.id}
+                  productName={product.name}
+                ></DeleteButton>
               </td>
             </tr>
           ))}

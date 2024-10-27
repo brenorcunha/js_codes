@@ -9,8 +9,7 @@
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "clean": "rm -rf node_modules dist",
-    "rebuild": "npm run clean && npm install && npm run build",
-    "start": "nodemon src/server.js"
+    "rebuild": "npm run clean && npm install && npm run build"
   },
   "dependencies": {
     "browserify-fs": "^1.0.0",
@@ -29,7 +28,6 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
-    "nodemon": "^3.1.6",
     "vite": "^5.4.5",
     "vite-plugin-node-polyfills": "^0.22.0"
   }

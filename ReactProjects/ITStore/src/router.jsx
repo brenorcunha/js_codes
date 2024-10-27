@@ -1,12 +1,9 @@
  import { createBrowserRouter } from "react-router-dom";
 import Cart from "./pages/Cart";
 import Dashboard from "./pages/Dashboard";
-import Home from "./components/Home";
 import Products from "./pages/Products";
 import Layout from "./pages/Layout";
 import Product from "./pages/Product";
-import { loadProduct } from "./loaders/products";
-import ProductBoundary from "./error-boundaries/productBoundary";
 import RegisterProduct from "./pages/createProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import ProductsLayout from "./components/productsLayout";
