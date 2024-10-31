@@ -1,20 +1,21 @@
 import { useNavigate } from "react-router-dom"
-import { StockContext } from "../contexts/StockContext"
+import {StockContext} from "../contexts/StockContext"
 import PropTypes from "prop-types"
 import { useContext } from "react"
 
 DeleteButton.propTypes = {
-  productId: PropTypes.number.isRequired,
-  productName: PropTypes.string.isRequired
+  itemId: PropTypes.number.isRequired,
+  itemName: PropTypes.string.isRequired
 }
 
-export default function DeleteButton({ productId, productName }) {
+export default function DeleteButton({ itemId, itemName }) {
+  console.log('Product IDs: ', itemId)
   const { deleteItem } = useContext(StockContext)
   const navigate = useNavigate()
 
   const handleDelete = () => {
-    if (confirm(`Are U sure U want to delete ${productName}?`)) {
-      deleteItem(productId)
+    if (confirm(`Are U sure U want to delete ${itemName}?`)) {
+      deleteItem(itemId)
       navigate("/products")
     }
   }

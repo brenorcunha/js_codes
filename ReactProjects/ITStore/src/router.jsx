@@ -4,9 +4,9 @@ import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import Layout from "./pages/Layout";
 import Product from "./pages/Product";
-import RegisterProduct from "./pages/createProduct";
+import RegisterProduct from "./components/RegisterProduct";
 import UpdateProduct from "./pages/UpdateProduct";
-import ProductsLayout from "./components/productsLayout";
+import ProductsLayout from "./components/ProductsLayout";
 
 const router= createBrowserRouter([
     {

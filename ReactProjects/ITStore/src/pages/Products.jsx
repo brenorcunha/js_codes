@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { StockContext } from "../contexts/StockContext";
-import DeleteButton from "../components/deleteButton";
+import DeleteButton from "../components/DeleteButton";
 import { useContext } from "react";
-//NEXT: Conseguir exibir produto aqui pelo ID: 'products.map is not a function' ocorre.
-export default function Products() {
-  const products = useContext(StockContext);
+
+export default function items() {
+  const { items } = useContext(StockContext);
+  console.log(items)
+  const { id } = useParams();
+  //const item = items.find((item) => item.id == parseInt (id));
   return (
     <section>
       <Link to="/products">
@@ -23,28 +26,25 @@ export default function Products() {
           </tr>
         </thead>
         <tbody>
-          {products.map((product) => (
-            <tr key={product.id}>
-              <td>{product.id}</td>
-              <td>{product.name}</td>
-              <td>{product.description}</td>
-              <td>R$ {product.price}</td>
-              <td>{product.quantity} unit.</td>
-              <td>{product.type}</td>
+          {items.map((item) => (
+            <tr key={item.id}>
+              <td>{item.id}</td>
+              <td>{item.name}</td>
+              <td>{item.description}</td>
+              <td>R$ {item.price}</td>
+              <td>{item.quantity} unit.</td>
+              <td>{item.type}</td>
               <td>
-                <Link
-                  to={`${product.id}`}
-                  className="button is-primary is-small"
-                >
+                <Link to={`${item.id}`} className="button is-primary is-small">
                   See
                 </Link>
                 <br />
-                <Link to={`${product.id}/update`} className="button is-small">
+                <Link to={`${item.id}/update`} className="button is-small">
                   Update
                 </Link>
                 <DeleteButton
-                  productId={product.id}
-                  productName={product.name}
+                  itemId={item.id}
+                  itemName={item.name}
                 ></DeleteButton>
               </td>
             </tr>

@@ -2,11 +2,11 @@ import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { StockContext } from "../contexts/StockContext";
 import { useContext } from "react";
+import DeleteButton from "../components/DeleteButton"
 export default function Product() {
-  const { Products } = useContext(StockContext)
-
-  const {id} = useParams()
-  const product = Products.find((product) => ( product.id == parseInt(id)))
+  const {items} = useContext(StockContext);
+  const { id } = useParams();
+  const item = items.find((item) => item.id == parseInt(id));
   return (
     <section>
       <Link to="/products">
@@ -24,19 +24,19 @@ export default function Product() {
           </tr>
         </thead>
         <tbody>
-            <tr>
-              <td>{product.name}</td>
-              <td>{product.description}</td>
-              <td>{product.price}</td>
-              <td>{product.quantity}</td>
-              <td>{product.type}</td>
-              <td>
-                <Link to={`${product.id}/update`} className="button is-small">
-                  Update
-                </Link>
-                <DeleteButton itemId={product.id} itemName={product.name} />
-              </td>
-            </tr>
+          <tr>
+            <td>{item.name}</td>
+            <td>{item.description}</td>
+            <td>{item.price}</td>
+            <td>{item.quantity}</td>
+            <td>{item.type}</td>
+            <td>
+              <Link to={`${item.id}/update`} className="button is-primary is-small">
+                Update
+              </Link>
+              <DeleteButton itemId={item.id} itemName={item.name} />
+            </td>
+          </tr>
         </tbody>
       </table>
     </section>

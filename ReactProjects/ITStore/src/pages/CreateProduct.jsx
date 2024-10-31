@@ -1,6 +1,6 @@
 //Same as 'entities/stockItem.js'
-
-const typesA = [
+//Quando vou criar um produto, está dando erro 'Class constructor CreateProduct cannot be invoked without 'new''
+export const typesA = [
   "Processor",
   "RAM Memory",
   "Graphics Card",
@@ -8,7 +8,7 @@ const typesA = [
   "Cooler",
 ];
 
-export default class createProduct {
+export default class CreateProduct {
   constructor({name, description, price, quantity, type}) {
     (this.name = name),
       (this.description = description),

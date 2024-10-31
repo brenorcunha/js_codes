@@ -13,7 +13,7 @@ function StockContextProvider({ children }) {
     });
     return items;
   });
-  //For get sure the data will be read often from the localStorage:
+  //To ensure that the data will be read often from the localStorage:
   useEffect(() => {
     const storedItems = localStorage.getItem("stock");
     if (storedItems) {

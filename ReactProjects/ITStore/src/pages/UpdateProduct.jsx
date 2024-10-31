@@ -19,7 +19,7 @@ export default function UpdateProduct({ product}){
                 updatedItem(product.id, item)
                 alert("Item successfully updated!")
             } else{
-                const validItem = new createProduct(item)
+                const validItem = new CreateProduct(item)
                 addItem(validItem)
                 setItem(defaultItem)
                 alert("Item successfully registered!")
