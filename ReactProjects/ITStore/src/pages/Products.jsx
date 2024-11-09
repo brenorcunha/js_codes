@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { StockContext } from "../contexts/StockContext";
 import DeleteButton from "../components/DeleteButton";
 import { useContext } from "react";
-
+//Similar a 'ItensTable.jsx': 
 export default function items() {
   const { items } = useContext(StockContext);
   console.log(items)
@@ -10,9 +10,6 @@ export default function items() {
   //const item = items.find((item) => item.id == parseInt (id));
   return (
     <section>
-      <Link to="/products">
-        <button> Back </button>
-      </Link>
       <table>
         <thead>
           <tr>

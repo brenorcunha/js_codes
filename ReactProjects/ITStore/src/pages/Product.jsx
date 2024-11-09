@@ -9,9 +9,6 @@ export default function Product() {
   const item = items.find((item) => item.id == parseInt(id));
   return (
     <section>
-      <Link to="/products">
-        <button>Back</button>
-      </Link>
       <table>
         <thead>
           <tr>

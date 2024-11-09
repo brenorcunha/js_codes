@@ -21,43 +21,51 @@ function StockContextProvider({ children }) {
       items.forEach((item) => {
         item.addDate = new Date(item.addDate);
       });
-      console.log(items);
       setItems(items);
     }
   }, []);
-  
+
   const addItem = (item) => {
     setItems((current) => {
       const updatedItems = [item, ...current];
       localStorage.setItem("stock", JSON.stringify(updatedItems));
       return updatedItems;
-      /* OLD CODE:
-      if (localStorage.getItem("stock") === null) {
-      } else {
-        localStorage.setItem(
-          "stock",
-          JSON.stringify([
-            ...JSON.parse(localStorage.getItem("stock")),
-            updatedItems,
-          ])
-        );
-      } */
     });
   };
+
+  /* OLD CODE:
+  if (localStorage.getItem("stock") === null) {
+  } else {
+    localStorage.setItem(
+      "stock",
+      JSON.stringify([
+        ...JSON.parse(localStorage.getItem("stock")),
+        updatedItems,
+      ])
+    );
+  } */
 
   const getItem = (itemId) => {
     return items.find((i) => i.id === +itemId);
   };
 
-  const updateItem = (itemId, newAttributes) =>
+  const updateItem = (itemId, newAttributes) => {
     setItems((current) => {
       const itemIndex = current.findIndex((i) => i.id === itemId);
+      if (itemIndex === -1) {
+        console.error("Item ID not found!");
+        return current;
+      }
+
       const updatedItems = [...current];
-      Object.assign(updatedItems[itemIndex], newAttributes);
-      localStorage.setItem("stock", JSON.stringify(updatedItems));
+      updatedItems[itemIndex] = {
+        ...updatedItems[itemIndex],
+        ...newAttributes
+      };
+      localStorage.setItem("stock", JSON.stringify(updatedItems))
       return updatedItems;
     });
-
+  };
   const deleteItem = (itemId) => {
     setItems((current) => {
       const updatedItems = current.filter((item) => item.id !== itemId);

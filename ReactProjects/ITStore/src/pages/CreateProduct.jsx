@@ -1,5 +1,4 @@
 //Same as 'entities/stockItem.js'
-//Quando vou criar um produto, está dando erro 'Class constructor CreateProduct cannot be invoked without 'new''
 export const typesA = [
   "Processor",
   "RAM Memory",
@@ -7,32 +6,31 @@ export const typesA = [
   "Motherboard",
   "Cooler",
 ];
-
 export default class CreateProduct {
-  constructor({name, description, price, quantity, type}) {
-    (this.name = name),
+  constructor({ name, description, price, quantity, type }) {
+    (this.id = Math.floor(Math.random() * 1000)),
+      (this.name = name),
       (this.description = description),
-      (this.price = price),
-      (this.quantity = quantity),
+      (this.price = +price),
+      (this.quantity = +quantity),
       (this.type = type),
-      (this.#validate())
+      (this.addDate= new Date()),
+      this.#validate(this);
   }
   #validate(product) {
-    const validName = typeof product.name === "string";
-    const validDescription = typeof product.description === "string";
-    const validQuantity =
-      typeof product.quantity === "number" && Number.isInteger(product.quantity);
-    const validPrice = typeof product.price === "number";
-    const validType = typesA.includes(product.type);
-    if (
-      !validName ||
-      !validDescription ||
-      !validQuantity ||
-      !validPrice ||
-      !validType
-    ) {
-      alert("[ERROR] Invalid item. Try again.")
+    const validName = typeof this.name === "string";
+    const validDescription = typeof this.description === "string";
+    const validPrice = typeof this.price === "number";
+    const validQuantity = typeof this.quantity === "number" && Number.isInteger(this.quantity);
+    const validType = typesA.includes(this.type);
+    console.log(typeof(this.name))
+    console.log(typeof(this.description))
+    console.log(typeof(this.price))
+    console.log(typeof(this.quantity))
+    
+    if (!validType || !validPrice || !validName || !validQuantity) {
       throw new Error("Invalid item!");
     }
+    return product;
   }
 }
