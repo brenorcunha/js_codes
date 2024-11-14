@@ -5,7 +5,6 @@ import Products from "./pages/Products";
 import Layout from "./pages/Layout";
 import Product from "./pages/Product";
 import RegisterProduct from "./components/RegisterProduct";
-import UpdateProduct from "./pages/UpdateProduct";
 import ProductsLayout from "./components/ProductsLayout";
 
 const router= createBrowserRouter([
@@ -22,7 +21,7 @@ const router= createBrowserRouter([
                 {index: true, element: <Products />},
                 {path: "new", element: <RegisterProduct />},
                 {path: ":id", element: <Product />},
-                {path: ":id/update", element: <UpdateProduct />}
+                {path: ":id/update", element: <RegisterProduct />} //Antigo Updateproduct
             ]
         },{
             path: "/cart",

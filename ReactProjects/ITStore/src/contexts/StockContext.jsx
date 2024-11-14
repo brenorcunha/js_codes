@@ -58,10 +58,7 @@ function StockContextProvider({ children }) {
       }
 
       const updatedItems = [...current];
-      updatedItems[itemIndex] = {
-        ...updatedItems[itemIndex],
-        ...newAttributes
-      };
+      Object.assign(updatedItems[itemIndex], newAttributes),
       localStorage.setItem("stock", JSON.stringify(updatedItems))
       return updatedItems;
     });

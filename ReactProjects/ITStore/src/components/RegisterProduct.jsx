@@ -1,29 +1,45 @@
+//Semelhante a 'ItemForm.jsx'.
 import CreateProduct, { typesA } from "../pages/CreateProduct";
-//Semelhante a 'ItemForm.jsx'.'useStock' decomposto:
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StockContext } from "../contexts/StockContext";
-import { useState } from "react";
 import PropTypes from "prop-types";
+import { useParams } from "react-router-dom";
 
 RegisterProduct.propTypes = {
   product: PropTypes.object,
 };
-// PROBLEMA: Se add o produto como está, dá que não encontrou o ID, se add um ID, nome e descrição ficam como indefinidos.
-export default function RegisterProduct({ product }) {
+
+export default function RegisterProduct() {
+  let { id } = useParams();
   const defaultProduct = {
     name: "",
     description: "",
     price: 0.0,
     quantity: 0,
-    type: "Processor",
+    type: " ",
     addDate: new Date(),
   };
-  const [item, setItem] = useState(product ? product : defaultProduct);
+
+  const [item, setItem] = useState(defaultProduct);
   const { addItem, updateItem } = useContext(StockContext); //Desestruturando como objetos.
+  
+//Esse useEffect deve obter os dados do localStorage e disponibilizá-los para edição e salvá-los lá.
+  useEffect(() => {
+    /* const stock = JSON.parse(localStorage.getItem("stock")) || [];
+    const product = stock.find((prod) => prod.id === id);
+    if (product) {
+      setItem(product);
+    } */
+      const stock = localStorage.getItem("stock");
+      if (stock) {
+        const product = JSON.parse(stock);
+        setItem(product);
+      }
+  }, [id]);
 
   const handleChange = (event) => {
-    const {name, value} = event.target;
-    setItem((current) =>({
+    const { name, value } = event.target;
+    setItem((current) => ({
       ...current,
       [name]: value,
     }));
@@ -31,22 +47,21 @@ export default function RegisterProduct({ product }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     try {
-      if(product){
-        const index = localStorage.getItem("stock").findIndex((prod) => prod.id === product.id)
-        if(index != -1){
-          updateItem(product.id, item)
-          alert("Product successfully registered!");
-        }
+      if (id) {
+        updateItem(id, item);
+        alert("Product successfully updated!");
+        //const index = localStorage.getItem("stock").findIndex((prod) => prod.id === id)
       } else {
-        //Bloco de código destinado a registrar produto neste array/ lista no localStorage:
+        //Bloco de código destinado a registrar produto no localStorage:
         let validProd = new CreateProduct(item); //Enviará para a função que checa se informações do produto estão válidas.
         addItem(validProd); //Adiciona ao estado.
         setItem(defaultProduct); //Adiciona ao estado.
         alert("Product successfully registered.");
+
         /* document.getElementById("name").value = "";
         document.getElementById("description").value = "";
-        document.getElementById("price").value = "";
-        document.getElementById("quantity").value = ""; */
+        document.getElementById("price").value = 0.00;
+        document.getElementById("quantity").value = 0; */
       }
     } catch (error) {
       alert("An error ocurred!" + error.message);
@@ -56,7 +71,7 @@ export default function RegisterProduct({ product }) {
   return (
     <div className="row">
       <form onSubmit={handleSubmit}>
-        <h2>Add new Product: </h2>
+        <h2>{id ? "Edit product: " : "Add new Product:"}</h2>
         <div>
           <label htmlFor="name">Name: </label>
           <input
@@ -91,7 +106,7 @@ export default function RegisterProduct({ product }) {
             value={item.price}
             onChange={handleChange}
           />
-          </div>
+        </div>
         <div>
           <label htmlFor="quantity">Quantity: </label>
           <input
@@ -107,7 +122,13 @@ export default function RegisterProduct({ product }) {
         </div>
         <div>
           <label htmlFor="type">Type: </label>
-          <select name="type" id="type" required value={item.type} onChange={handleChange}>
+          <select
+            name="type"
+            id="type"
+            required
+            value={item.type}
+            onChange={handleChange}
+          >
             <option disabled value="Select a type...">
               Select a type...
             </option>
@@ -117,8 +138,8 @@ export default function RegisterProduct({ product }) {
               </option>
             ))}
           </select>
-        </ div>
-        <button type="submit">Register</button>
+        </div>
+        <button type="submit">{id ? "Update" : "Register:"}</button>
       </form>
     </div>
   );

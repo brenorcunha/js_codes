@@ -1,4 +1,4 @@
-//Same as 'entities/stockItem.js'
+//'entities/stockItem.js' Auxiliar para criação
 export const typesA = [
   "Processor",
   "RAM Memory",
@@ -23,12 +23,8 @@ export default class CreateProduct {
     const validPrice = typeof this.price === "number";
     const validQuantity = typeof this.quantity === "number" && Number.isInteger(this.quantity);
     const validType = typesA.includes(this.type);
-    console.log(typeof(this.name))
-    console.log(typeof(this.description))
-    console.log(typeof(this.price))
-    console.log(typeof(this.quantity))
     
-    if (!validType || !validPrice || !validName || !validQuantity) {
+    if (!validType || !validDescription || !validPrice || !validName || !validQuantity) {
       throw new Error("Invalid item!");
     }
     return product;

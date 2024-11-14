@@ -28,7 +28,7 @@ export default function Product() {
             <td>{item.quantity}</td>
             <td>{item.type}</td>
             <td>
-              <Link to={`${item.id}/update`} className="button is-primary is-small">
+              <Link to={`update`} className="button is-primary is-small">
                 Update
               </Link>
               <DeleteButton itemId={item.id} itemName={item.name} />
