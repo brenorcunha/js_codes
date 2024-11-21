@@ -1,11 +1,14 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { StockContext } from "../contexts/StockContext";
 import DeleteButton from "../components/DeleteButton";
 import { useContext } from "react";
+import UpdateButton from "../components/UpdateButton";
+import SeeButton from "../components/SeeButton";
+
 //Similar a 'ItensTable.jsx': 
 export default function items() {
   const { items } = useContext(StockContext);
-  console.log(items)
+  
   const { id } = useParams();
   //const item = items.find((item) => item.id == parseInt (id));
   return (
@@ -32,13 +35,16 @@ export default function items() {
               <td>{item.quantity} unit.</td>
               <td>{item.type}</td>
               <td>
-                <Link to={`${item.id}`} className="button is-primary is-small">
+                {
+                /* <Link to={`${item.id}`} className="button is-primary is-small">
                   See
                 </Link>
                 <br />
                 <Link to={`${item.id}/update`} className="button is-small">
                   Update
-                </Link>
+                </Link> */}
+                <SeeButton itemId={item.id}/>
+                <UpdateButton itemId={item.id} item={item}/>
                 <DeleteButton
                   itemId={item.id}
                   itemName={item.name}

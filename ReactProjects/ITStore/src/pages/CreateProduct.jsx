@@ -22,9 +22,9 @@ export default class CreateProduct {
     const validDescription = typeof this.description === "string";
     const validPrice = typeof this.price === "number";
     const validQuantity = typeof this.quantity === "number" && Number.isInteger(this.quantity);
-    const validType = typesA.includes(this.type);
+    const validType = typesA.includes(this.type.value);
     
-    if (!validType || !validDescription || !validPrice || !validName || !validQuantity) {
+    if (!validDescription || !validPrice || !validName || !validQuantity) {
       throw new Error("Invalid item!");
     }
     return product;

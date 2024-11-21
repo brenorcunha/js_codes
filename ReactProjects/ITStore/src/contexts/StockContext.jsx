@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 export const StockContext = createContext({});
 
 function StockContextProvider({ children }) {
+  const [cart, setCart] = useState([]);
   const [items, setItems] = useState(() => {
     const storedItems = localStorage.getItem("stock");
     if (!storedItems) return [];
@@ -27,7 +28,11 @@ function StockContextProvider({ children }) {
 
   const addItem = (item) => {
     setItems((current) => {
-      const updatedItems = [item, ...current];
+      const updatedItems = current.map((prod) => (prod.id === parseInt(item.id) ? item : prod))
+      //IF item was ot found, add it to the array: 
+      if(!updatedItems.some((prod) => prod.id === parseInt(item.id))){
+        updatedItems.push(item);
+      }
       localStorage.setItem("stock", JSON.stringify(updatedItems));
       return updatedItems;
     });
@@ -53,7 +58,6 @@ function StockContextProvider({ children }) {
     setItems((current) => {
       const itemIndex = current.findIndex((i) => i.id === itemId);
       if (itemIndex === -1) {
-        console.error("Item ID not found!");
         return current;
       }
 
@@ -70,13 +74,20 @@ function StockContextProvider({ children }) {
       return updatedItems;
     });
   };
+  const addToCart = (item) => {
+    setCart((current) => {
+      current.map((prod) => (prod.id === parseInt(item.id) ? item : prod))
+    })
+  }
 
   const stock = {
+    cart,
     items,
     addItem,
     getItem,
     updateItem,
     deleteItem,
+    addToCart
   };
   return (
     <StockContext.Provider value={stock}>{children}</StockContext.Provider>

@@ -6,8 +6,13 @@ export default function ProductsLayout() {
     <main>
       <h1>Stock Items</h1>
       <div className="tabs">
-        <Link to="/products" className="button"> All </Link>
-        <Link to="/products/new" className="button"> New </Link>
+        {pathname !== "/products" && (
+          <Link to="/products" className="button is-primary"> Back </Link>
+        )}
+        {pathname !=="/products/new" && (
+          <Link to="/products/new" className="button is-primary"> New </Link>
+        )}
+        <br />
       </div>
       <Outlet />
     </main>

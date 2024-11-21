@@ -1,12 +1,18 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { StockContext } from "../contexts/StockContext";
 import { useContext } from "react";
 import DeleteButton from "../components/DeleteButton"
+import UpdateButton from "../components/UpdateButton";
+import CartButton from "../components/CartButton";
+
 export default function Product() {
-  const {items} = useContext(StockContext);
+  const { items } = useContext(StockContext);
   const { id } = useParams();
-  const item = items.find((item) => item.id == parseInt(id));
+  const item = items.find((item) => item.id == parseInt(id)) || [];
+  if(!item){
+    <div>Item not found!</div>
+  }
   return (
     <section>
       <table>
@@ -28,10 +34,9 @@ export default function Product() {
             <td>{item.quantity}</td>
             <td>{item.type}</td>
             <td>
-              <Link to={`update`} className="button is-primary is-small">
-                Update
-              </Link>
+              <UpdateButton itemId={item.id} itemName={item.name}/>
               <DeleteButton itemId={item.id} itemName={item.name} />
+              <CartButton item={item}/>
             </td>
           </tr>
         </tbody>

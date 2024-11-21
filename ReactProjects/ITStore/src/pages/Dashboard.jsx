@@ -10,6 +10,7 @@ export default function Dashboard() {
 
   //Products with less than 10 items in stock:
   const lowStockItems = items.filter((item) => item.quantity < 10);
+  const totalInventory = items.reduce((sum, item) => +sum + +item.quantity, 0)
   return (
     <main>
       <header>
@@ -23,7 +24,7 @@ export default function Dashboard() {
         </p>
         <p className="cell">
           Total quantity of all items:{" "}
-          {items.reduce((total, item) => total + item.quantity, 0)}
+          {totalInventory}
         </p>
         <p className="cell">Added items last 10 days: {recentItems.length}</p>
         <p className="cell">

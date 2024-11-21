@@ -3,7 +3,7 @@ import CreateProduct, { typesA } from "../pages/CreateProduct";
 import { useContext, useEffect, useState } from "react";
 import { StockContext } from "../contexts/StockContext";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 
 RegisterProduct.propTypes = {
   product: PropTypes.object,
@@ -22,19 +22,15 @@ export default function RegisterProduct() {
 
   const [item, setItem] = useState(defaultProduct);
   const { addItem, updateItem } = useContext(StockContext); //Desestruturando como objetos.
-  
-//Esse useEffect deve obter os dados do localStorage e disponibilizá-los para edição e salvá-los lá.
+
+  //Esse useEffect deve obter os dados do localStorage e disponibilizá-los para edição e salvá-los lá.
   useEffect(() => {
-    /* const stock = JSON.parse(localStorage.getItem("stock")) || [];
-    const product = stock.find((prod) => prod.id === id);
+    const stock = JSON.parse(localStorage.getItem("stock")) || [];
+    const product = stock.find((prod) => prod.id === parseInt(id));
+
     if (product) {
       setItem(product);
-    } */
-      const stock = localStorage.getItem("stock");
-      if (stock) {
-        const product = JSON.parse(stock);
-        setItem(product);
-      }
+    }
   }, [id]);
 
   const handleChange = (event) => {
@@ -44,13 +40,15 @@ export default function RegisterProduct() {
       [name]: value,
     }));
   };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     try {
       if (id) {
         updateItem(id, item);
         alert("Product successfully updated!");
-        //const index = localStorage.getItem("stock").findIndex((prod) => prod.id === id)
+        addItem(item);
+        Navigate("/products");
       } else {
         //Bloco de código destinado a registrar produto no localStorage:
         let validProd = new CreateProduct(item); //Enviará para a função que checa se informações do produto estão válidas.
@@ -58,10 +56,10 @@ export default function RegisterProduct() {
         setItem(defaultProduct); //Adiciona ao estado.
         alert("Product successfully registered.");
 
-        /* document.getElementById("name").value = "";
+        document.getElementById("name").value = "";
         document.getElementById("description").value = "";
-        document.getElementById("price").value = 0.00;
-        document.getElementById("quantity").value = 0; */
+        document.getElementById("price").value = 0.0;
+        document.getElementById("quantity").value = 0;
       }
     } catch (error) {
       alert("An error ocurred!" + error.message);
@@ -139,7 +137,7 @@ export default function RegisterProduct() {
             ))}
           </select>
         </div>
-        <button type="submit">{id ? "Update" : "Register:"}</button>
+        <button type="submit">{id ? "Update" : "Register"}</button>
       </form>
     </div>
   );

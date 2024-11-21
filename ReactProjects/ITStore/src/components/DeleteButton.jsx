@@ -9,7 +9,6 @@ DeleteButton.propTypes = {
 }
 
 export default function DeleteButton({ itemId, itemName }) {
-  console.log('Product IDs: ', itemId)
   const { deleteItem } = useContext(StockContext)
   const navigate = useNavigate()
 
