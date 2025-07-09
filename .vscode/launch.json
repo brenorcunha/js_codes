@@ -5,6 +5,13 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "firefox",
+            "request": "launch",
+            "reAttach": true,
+            "name": "Launch index.html",
+            "file": "${workspaceFolder}/index.html"
+        },
+        {
             "name": "Launch Program",
             "program": "${workspaceFolder}\\personalFinanceAPI\\script.js",
             "request": "launch",
@@ -31,13 +38,6 @@
                 "<node_internals>/**"
             ],
             "type": "node"
-        },
-        {
-            "type": "msedge",
-            "request": "launch",
-            "name": "Launch Edge",
-            "url": "http://localhost:3000/personalFinanceAPI",
-            "webRoot": "${workspaceFolder}/personalFinanceAPI"
         },
 
     ]

@@ -157,3 +157,7 @@ console.log(App.findUser("sandral@email.com").account);
 console.log(App.findUser("sandral@email.com").account.loans[0].installments);
 console.log(App.findUser("josehac@email.com"));
 console.log(App.findUser("josehac@email.com").account);
+
+console.log(App.findUser("breno@email.com").account.getBalance)
+console.log(App.findUser("sandral@email.com").account.getBalance)
+console.log(App.findUser("josehac@email.com").account.getBalance)

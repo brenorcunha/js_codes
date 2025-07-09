@@ -16,7 +16,7 @@ async function BMCCalc(weight, height){
 async function run(){
     const bmc = await BMCCalc(60, "null")
 	if(status==true){
-        console.log(`Your BMC index is: ${BMC}`);
+        console.log(`Your BMC index is: ${bmc}`);
     	console.log("Less than 18.5: Underweight. ");
     	console.log("Between 18.6 and 24.9: Normal weight. ");
     	console.log("Between 25 and 29.9 = Light overweight. ");
